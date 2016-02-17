@@ -8,7 +8,7 @@
 	$map = $_GET['map'];
 	$p = $_GET['p'];
 	
-	if ($map! = "ref") { mysql_query("UPDATE sessions SET $map=1, step=step +1 WHERE id='$id' "); }
+	if ($map != "ref") { mysql_query("UPDATE sessions SET $map=1, step=step +1 WHERE id='$id' "); }
 
 	$select = mysql_query("SELECT * FROM sessions where id='$id' ");
 
