@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Wcale nie mapbantool</title>
+	<title>Map ban tool</title>
 	
 
 	<link rel="Stylesheet" type="text/css" href="style.css" />
@@ -11,7 +11,7 @@
 		function refresher()
 		{
 			dostuffandthings("ref");
-			setInterval(function() { dostuffandthings("ref") }, 5000);
+			setInterval(function() { dostuffandthings("ref") }, 2500);
 		}
 		
 		
@@ -45,15 +45,18 @@
 					};
 				};
 			}
-			function dostuffandthings(a) {
+			function dostuffandthings(map) {
 			
 			<?php
 			$id=$_GET['id'];
-			echo "var id=\"$id\";";
+			$p=$_GET['p'];
+			echo "var id=\"$id\";
+			";
+			echo "var p=\"$p\";";
 			?>
 			
 			var adres="banprocessing.php";
-				adres=adres+"?id="+id+"&map="+a;
+				adres=adres+"?id="+id+"&map="+map+"&p="+p;
 				r.open('GET', adres , true);
 				r.onreadystatechange = processResponse;
 				r.send();
