@@ -13,10 +13,10 @@ else if($_CONTEXT === "DEVELOPMENT-RSX") {
     $mysql_password = "ksex69";
 }
 else if($_CONTEXT === "Zychuu") {
-    $mysql_host = "mysql.cba.pl";
-    $mysql_database = "zychuu_cba_pl";
-    $mysql_user = "zychuu97";
-    $mysql_password = "<db password here>";
+    $mysql_host = "mysql1.000webhost.com";
+    $mysql_database = "a8800507_bandb";
+    $mysql_user = "a8800507_banuser";
+    $mysql_password = "pas123";
 }
 else {
     echo "Error: Unknown context!";
