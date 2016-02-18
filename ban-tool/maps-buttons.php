@@ -43,5 +43,3 @@ if ($twillight==0)
     echo "<div id=\"twillight\"><img src=\"pic/twillight.jpg\" onclick='dostuffandthings(\"twillight\")'></div>" ;
 }
 else {echo "<div id=\"twillight\"><img src=\"pic/twillightban.jpg\"></div>";}
-
-?>

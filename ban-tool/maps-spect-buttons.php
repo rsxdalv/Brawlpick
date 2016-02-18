@@ -46,4 +46,3 @@ if ($blackguard==0)
 				echo "<div id=\"twillight\"><img src=\"pic/twillight.jpg\"></div>" ;
 			}
 			else {echo "<div id=\"twillight\"><img src=\"pic/twillightban.jpg\"></div>";}
-?>

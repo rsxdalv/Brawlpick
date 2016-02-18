@@ -14,4 +14,3 @@ else if($_CONTEXT==="DEVELOPMENT") {
 else {
     echo "Error: Unknown context!";
 }
-?>
