@@ -1,6 +1,6 @@
 <?php
 
-echo "Your turn to ban </ br>";
+echo "Your turn to ban<br />";
 
 if ($blackguard == 0) {
     echo "<div id=\"blackguard\"><img src=\"pic/blackguard.jpg\" onclick='dostuffandthings(\"blackguard\")'></div>" ;
