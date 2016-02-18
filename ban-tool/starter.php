@@ -17,5 +17,3 @@ echo "Spect link: http://zychuu.cba.pl/mapban/bantool.php?id=$id&p=3";
 session_unset();	
 session_destroy();
 echo session_id();
-
-?>
