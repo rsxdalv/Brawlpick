@@ -1,8 +1,6 @@
 <html>
 <head>
 	<title>Map ban tool</title>
-	
-
 	<link rel="Stylesheet" type="text/css" href="style.css" />
 	<meta charset="UTF-8">
 	
