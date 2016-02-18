@@ -45,8 +45,8 @@ and open the template in the editor.
 			var r;
 			r = getXMLHttpRequest();
 			function processResponse() {
-				if (r.readyState == 4) {
-					if (r.status == 200) {
+				if (r.readyState === 4) {
+					if (r.status === 200) {
 						document.getElementById("bantool").innerHTML=r.responseText; 
 					};
 				};
@@ -66,17 +66,19 @@ and open the template in the editor.
 	
 </head>
 
-<body onload='refresher()'>
+<body>
 
 <div id="bantool">
-    <div id="message"><a id="message_text"></a></div>
-    <div id="blackguard"><img src="pic/blackguard.jpg" onclick='dostuffandthings("blackguard")'></div>
-    <div id="kings"><img src="pic/kings.jpg" onclick='dostuffandthings("kings")'></div>
-    <div id="mammoth"><img src="pic/mammoth.jpg" onclick='dostuffandthings("mammoth")'></div>
-    <div id="ship"><img src="pic/ship.jpg" onclick='dostuffandthings("shipwreck")'></div>
-    <div id="shithall"><img src="pic/shithall.jpg" onclick='dostuffandthings("shithall")'></div>
-    <div id="stadium"><img src="pic/stadium.jpg" onclick='dostuffandthings("stadium")'></div>
-    <div id="twillight"><img src="pic/twillight.jpg" onclick='dostuffandthings("twillight")'></div> <br>
+    <!-- document.getElementById("message_text").innerHTML="test" -->
+    <div id="message"><a id="message_text">Message Zone</a></div>
+    <div id="blackguard"><img src="img/keep.jpg" alt="Blackguard Keep" onclick='dostuffandthings("blackguard")'></div>
+    <div id="kings"><img src="img/pass.jpg" alt="Kings Pass" onclick='dostuffandthings("kings")'></div>
+    <div id="mammoth"><img src="img/fortress.jpg" alt="Mammoth Fortress" onclick='dostuffandthings("mammoth")'></div>
+    <div id="ship"><img src="img/falls.jpg" alt="Shipwreck Falls" onclick='dostuffandthings("shipwreck")'></div>
+    <div id="shithall"><img src="img/hall.jpg" alt="The Great Hall" onclick='dostuffandthings("shithall")'></div>
+    <div id="stadium"><img src="img/stadium.jpg" alt="Thundergard Stadium" onclick='dostuffandthings("stadium")'></div>
+    <div id="twillight"><img src="img/grove.jpg" alt="Twilight Grove" onclick='dostuffandthings("twillight")'></div>
+    <br />
 
 </div>
 
