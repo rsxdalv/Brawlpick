@@ -7,7 +7,7 @@
 function refresher()
 {
     dostuffandthings("ref");
-    setInterval( function() { dostuffandthings("ref") } , 2500);
+    setInterval( function() { dostuffandthings("ref"); } , 2500);
 }
 
 function getXMLHttpRequest() {
