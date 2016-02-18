@@ -7,7 +7,79 @@ and open the template in the editor.
     Created on : Feb 18, 2016, 12:47:02 AM
     Author     : Roberts
 */
-div#blackguard, div#kings, div#mammoth, div#shipwreck, div#shithall, div#stadium, div#twillight
-{
+
+.map {
+    width: 285px;
+    height: 165px;
     display: inline-block;
+}
+
+/* Icon section */
+
+#keep {
+    background-image:url(img/keep.jpg);
+}
+
+#keep:hover {
+    background-image:url(img/keep_ban.jpg);
+}
+
+#pass {
+    background-image:url(img/pass.jpg);
+}
+
+#pass:hover {
+    background-image:url(img/pass_ban.jpg);
+}
+
+
+#fortress {
+    background-image:url(img/fortress.jpg);
+}
+
+#fortress:hover {
+    background-image:url(img/fortress_ban.jpg);
+}
+
+
+#falls {
+    background-image:url(img/falls.jpg);
+}
+
+#falls:hover {
+    background-image:url(img/falls_ban.jpg);
+}
+
+
+#hall {
+    background-image:url(img/hall.jpg);
+}
+
+#hall:hover {
+    background-image:url(img/hall_ban.jpg);
+}
+
+
+#stadium {
+    background-image:url(img/stadium.jpg);
+}
+
+#stadium:hover {
+    background-image:url(img/stadium_ban.jpg);
+}
+
+
+#grove {
+    background-image:url(img/grove.jpg);
+}
+
+#grove:hover {
+    background-image:url(img/grove_ban.jpg);
+}
+
+/* Message format */
+
+a#message_text
+{
+    font-weight: bold;
 }
