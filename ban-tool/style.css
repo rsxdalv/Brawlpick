@@ -17,9 +17,15 @@ and open the template in the editor.
     height: 165px;
     display: inline-block;
     border-radius: 45px;
-    color: white;
+    color: #E0E0E0;
+    font-weight: bold;
     font-size: 15pt;
     cursor: pointer;
+    text-shadow: -1px 0 #505050, 0 1px #505050, 1px 0 #505050, 0 -1px #505050;
+}
+
+.map:hover {
+    color: white;
 }
 
 /* Icon section */
