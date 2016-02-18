@@ -1,8 +1,8 @@
 <?php
 
-if ($step == 1 OR $step == 4 OR $step == 5) {echo "Player 1 is banning now";}
-if ($step == 2 OR $step == 3 OR $step == 6) {echo "Player 2 is banning now";}
-if ($step == 7) {echo "Bans complete";}
+if ($step == 1 OR $step == 4 OR $step == 5) {echo "Player 1 is banning now</ br>";}
+if ($step == 2 OR $step == 3 OR $step == 6) {echo "Player 2 is banning now</ br>";}
+if ($step == 7) {echo "Bans complete</ br>";}
 
 
 if ($blackguard == 0)
