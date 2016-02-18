@@ -8,10 +8,18 @@ and open the template in the editor.
     Author     : Roberts
 */
 
+#bantool {
+    text-align: center;
+}
+
 .map {
     width: 285px;
     height: 165px;
     display: inline-block;
+    border-radius: 45px;
+    color: white;
+    font-size: 15pt;
+    cursor: pointer;
 }
 
 /* Icon section */
@@ -82,4 +90,11 @@ and open the template in the editor.
 a#message_text
 {
     font-weight: bold;
+}
+
+#player 
+{
+    font-size: 20pt;
+    font-style: italic;
+    color: #404040;
 }
