@@ -1,6 +1,6 @@
 <?php
 global $_CONTEXT;
-$_CONTEXT = 'DEVELOPMENT';
+$_CONTEXT = 'DEVELOPMENT-RSX';
 
 
 ?>
