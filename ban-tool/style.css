@@ -24,8 +24,14 @@ and open the template in the editor.
     text-shadow: -1px 0 #505050, 0 1px #505050, 1px 0 #505050, 0 -1px #505050;
 }
 
-.map:hover {
+.map:hover :not(.banned){
     color: white;
+}
+
+.banned {
+    cursor: default;
+    text-decoration: line-through;
+    font-style: italic;
 }
 
 /* Icon section */
