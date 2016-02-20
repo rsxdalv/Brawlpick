@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 include "hashing.php";
+include "dbconnect.php";
 
 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
 $mapName = filter_input(INPUT_GET, "map", FILTER_SANITIZE_STRING);
@@ -27,4 +28,8 @@ $step = 1;
 
 $query = "INSERT INTO `ban_rooms` (`room`, `step`, `player`, `map`, `time`) VALUES ('".$room."', '".$step."', '".$player."', '".$map."', CURRENT_TIMESTAMP);";
 
-echo 'true';
+if (mysqli_query($database_link, $query)) {
+    echo 'true';
+} else {
+    echo 'false';
+}
