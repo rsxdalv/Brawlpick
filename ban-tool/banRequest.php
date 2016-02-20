@@ -18,18 +18,36 @@ $mapList = [keep => '1', pass => '2', fortress => '3', falls => '4', hall => '5'
 
 $map = $mapList[$mapName];
 
-//assert($map !== NULL);
+assert($map !== NULL);
 
 $room = decode_room($token, $key, $method);
 $player = decode_player($token, $key, $method); //decode_player($token);
 $step = 1;
 
-//assert($token === $token); // Verify banning power
+$duplicateQuery =   "SELECT *  
+                    FROM `ban_list` 
+                    WHERE `id` = ".$room.$map." ;";
 
-$query = "INSERT INTO `ban_rooms` (`room`, `step`, `player`, `map`, `time`) VALUES ('".$room."', '".$step."', '".$player."', '".$map."', CURRENT_TIMESTAMP);";
+if($result = mysqli_query($database_link, $duplicateQuery)) {
+    $numDuplicates = mysqli_num_rows($result);
+    mysqli_free_result($result);
+    if($numDuplicates) {
+    echo 'false'; // Attempt to ban a banned map.
+    exit;
+    }
+}
+else {
+    echo 'false' . PHP_EOL;
+    exit;
+}
 
-if (mysqli_query($database_link, $query)) {
+$insertion =    "INSERT INTO `ban_list`
+                (`id`, `room`, `player`, `map`, `step`) 
+                VALUES ('".$room.$map."', '".$room."', '".$player."', '".$map."', '".$step."');";
+$result = mysqli_query($database_link, $insertion);
+if($result) {
     echo 'true';
 } else {
     echo 'false';
+    exit;
 }

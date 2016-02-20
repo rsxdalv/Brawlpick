@@ -32,3 +32,16 @@ function ban(map)
     xhttp.open("GET", "banRequest.php?token="+token+"&map="+map, true);
     xhttp.send();
 }
+
+function listen()
+{
+    map = 'pass';
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        applyVisualBan(xhttp.response);
+    }
+    token = encodeURIComponent("N9KoXJgiU5KNJG/iM3H4xA==");
+    
+    xhttp.open("GET", "banRequest.php?token="+token+"&map="+map, true);
+    xhttp.send();
+}

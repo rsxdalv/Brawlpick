@@ -6,6 +6,15 @@
  * and open the template in the editor.
  */
 
-$createBanTable = "CREATE TABLE `brawl-draft-pick`.`ban_rooms` ( `room` INT NOT NULL , `step` INT NOT NULL , `player` INT NOT NULL , `map` INT NOT NULL , `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , INDEX (`room`)) ENGINE = InnoDB;";
+$create_ban_list_table = 
+        "CREATE TABLE `ban_list` (
+        `id` int(11) NOT NULL,
+        `room` int(11) NOT NULL,
+        `player` int(11) NOT NULL,
+        `map` int(11) NOT NULL,
+        `step` int(11) NOT NULL,
+        PRIMARY KEY (`id`)
+       ) ENGINE=InnoDB";
 
-$insertBanRow = "INSERT INTO `ban_rooms` (`room`, `step`, `player`, `map`, `time`) VALUES ('444', '1', '0', '1', CURRENT_TIMESTAMP);";
+
+$createBanTable = "CREATE TABLE `brawl-draft-pick`.`ban_rooms` ( `room` INT NOT NULL , `step` INT NOT NULL , `player` INT NOT NULL , `map` INT NOT NULL , `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , INDEX (`room`)) ENGINE = InnoDB;";
