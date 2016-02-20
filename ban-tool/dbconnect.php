@@ -1,11 +1,13 @@
 <?php
-include_once 'system/mysql.php';
+include_once 'system/sql.php';
 
-session_start();
+$database_link = mysqli_connect($mysql_host, $mysql_user, $mysql_password, $mysql_database);
 
-mysql_connect($mysql_host, $mysql_user, $mysql_password) or die("error with connecting to db");
+if (!$link) {
+    echo "Error: Unable to connect to MySQL." . PHP_EOL;
+    echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+    echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+    exit;
+}
 
-mysql_select_db($mysql_database) or die("error with chosing db");
-
-mysql_query ('SET NAMES utf8');
 
