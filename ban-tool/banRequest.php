@@ -11,6 +11,9 @@ include "maps.php";
 
 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
 $mapName = filter_input(INPUT_GET, "map", FILTER_SANITIZE_STRING);
+$step = filter_input(INPUT_GET, "step", FILTER_SANITIZE_NUMBER_INT);
+
+$step += 1;
 
 //assert($mapName !== NULL);
 
@@ -20,7 +23,6 @@ assert($map !== NULL);
 
 $room = decode_room($token, $key, $method);
 $player = decode_player($token, $key, $method); //decode_player($token);
-$step = 1;
 
 $duplicateQuery =   "SELECT *  
                     FROM `ban_list` 
@@ -42,6 +44,7 @@ else {
 $insertion =    "INSERT INTO `ban_list`
                 (`id`, `room`, `player`, `map`, `step`) 
                 VALUES ('".$room.$map."', '".$room."', '".$player."', '".$map."', '".$step."');";
+
 $result = mysqli_query($database_link, $insertion);
 if($result) {
     echo 'true';
