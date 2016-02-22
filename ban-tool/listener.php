@@ -31,8 +31,9 @@ if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
     for($i = 0; $i < 30; $i++) {
         mysqli_stmt_execute($stmt);
         mysqli_stmt_fetch($stmt);
-        if($newStep > $step);
+        if($newStep > $step) {
             break;
+        }
         usleep(1000000); 
     }
     mysqli_stmt_close($stmt);
