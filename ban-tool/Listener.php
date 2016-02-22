@@ -25,12 +25,15 @@ $listenQuery = "SELECT `step`
 // NB: Sleep time does not mess with PHP's max_execution_time on Linux, while on Windows this might be broken.
 if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
     mysqli_stmt_bind_param($stmt, "i", $room);
-    mysqli_stmt_execute($stmt);
+    //mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $newStep);
-    mysqli_stmt_fetch($stmt);
+    //mysqli_stmt_fetch($stmt);
     for($i = 0; $i < 30; $i++) {
-        usleep(1000000);
-        
+        usleep(1000000); 
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_fetch($stmt);
+        if($newStep > $step);
+        break;
     }
     mysqli_stmt_close($stmt);
     //echo 'new step: '.$newStep . PHP_EOL;
