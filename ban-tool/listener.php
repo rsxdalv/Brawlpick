@@ -28,17 +28,18 @@ if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
     //mysqli_stmt_execute($stmt);
     mysqli_stmt_bind_result($stmt, $newStep);
     //mysqli_stmt_fetch($stmt);
-    for($i = 0; $i < 30; $i++) {
+    for($i = 0; $i < 150; $i++) { // 15 Second execution blocks
         mysqli_stmt_execute($stmt);
         mysqli_stmt_fetch($stmt);
+//        echo 'new step: '.$newStep . PHP_EOL;
+//        echo 'old step: '.$step . PHP_EOL;
         if($newStep > $step) {
+//            echo 'STEP REACHED' . PHP_EOL;
             break;
         }
-        usleep(1000000); 
+        usleep(33333); // 30 Checks per second
     }
     mysqli_stmt_close($stmt);
-    //echo 'new step: '.$newStep . PHP_EOL;
-    //echo 'old step: '.$step . PHP_EOL;
     if($newStep > $step)
     {
         //echo 'success stepping in'. PHP_EOL;
@@ -64,6 +65,10 @@ if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
             echo 'false/read';
             exit;
         }
+    }
+    else {
+        echo "[-1]"; // JSON Notation
+        exit;
     }
 }
 else {
