@@ -29,11 +29,11 @@ if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
     mysqli_stmt_bind_result($stmt, $newStep);
     //mysqli_stmt_fetch($stmt);
     for($i = 0; $i < 30; $i++) {
-        usleep(1000000); 
         mysqli_stmt_execute($stmt);
         mysqli_stmt_fetch($stmt);
         if($newStep > $step);
-        break;
+            break;
+        usleep(1000000); 
     }
     mysqli_stmt_close($stmt);
     //echo 'new step: '.$newStep . PHP_EOL;
