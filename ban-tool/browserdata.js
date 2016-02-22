@@ -1,4 +1,6 @@
-﻿
+﻿// make this short php fragment execute somewhere in the page where the script will be launched. Getting ip from php is just much easier.
+// <script> userip = '<?php echo $_SERVER['REMOTE_ADDR']; ?>';</script>
+
 function getbrowserdata()
 {
 var nVer = navigator.appVersion;
