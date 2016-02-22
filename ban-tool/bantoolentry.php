@@ -1,7 +1,11 @@
 <html>
+<head>
 <title></title>
 
-<body>
+<script> userip = '<?php echo $_SERVER['REMOTE_ADDR']; ?>';</script>
+	<script type="text/javascript" src="browserdata.js"></script> 
+</head>
+<body onload='getbrowserdata()'>
 Visual-less enterance to ban tool. <br>
 
 <form action="starter.php" method="post">
@@ -11,6 +15,5 @@ Type: 	<input type="radio" name="p" value="1" checked> Player 1
 <input type="submit" value="Generate ban pool">
 
 </form>
-
 </body>
 </html>

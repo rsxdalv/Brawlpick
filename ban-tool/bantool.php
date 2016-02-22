@@ -3,64 +3,8 @@
 	<title>Map ban tool</title>
 	<link rel="Stylesheet" type="text/css" href="style.css" />
 	<meta charset="UTF-8">
-	
-		<script type="text/javascript">
-		
-		function refresher()
-		{
-			dostuffandthings("ref");
-			setInterval(function() { dostuffandthings("ref") }, 2500);
-		}
-		
-		
-		
-			function getXMLHttpRequest() {
-				var request = false;
-				try {
-					request = new XMLHttpRequest();
-				}
-				catch(err1) {
-					try {
-						request = new ActiveXObject('Msxml2.XMLHTTP');
-					}
-					catch(err2) {
-						try {
-							request = new ActiveXObject('Microsoft.XMLHTTP');                
-						} 
-						catch(err3) {
-							request = false;
-						}
-					}
-				}
-				return request;
-			}      
-			var r;
-			r = getXMLHttpRequest();
-			function processResponse() {
-				if (r.readyState == 4) {
-					if (r.status == 200) {
-						document.getElementById("bantool").innerHTML=r.responseText; 
-					};
-				};
-			}
-			function dostuffandthings(map) {
-			
-			<?php
-			$id=$_GET['id'];
-			$p=$_GET['p'];
-			echo "var id=\"$id\";
-			";
-			echo "var p=\"$p\";";
-			?>
-			
-			var adres="banprocessing.php";
-				adres=adres+"?id="+id+"&map="+map+"&p="+p;
-				r.open('GET', adres , true);
-				r.onreadystatechange = processResponse;
-				r.send();
-				//r.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			}
-		</script>
+	<script type="text/javascript" src="script.js"></script> 
+    <script type="text/javascript" src="newScript.js"></script>
 	
 </head>
 
