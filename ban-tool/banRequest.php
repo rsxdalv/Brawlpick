@@ -32,12 +32,16 @@ if($result = mysqli_query($database_link, $duplicateQuery)) {
     $numDuplicates = mysqli_num_rows($result);
     mysqli_free_result($result);
     if($numDuplicates) {
-    echo 'false'; // Attempt to ban a banned map.
-    exit;
+        echo "Error: Unable to perform SELECT query." . PHP_EOL; // Attempt to ban a banned map.
+        mysqli_close($database_link);
+        exit;
     }
 }
 else {
-    echo 'false' . PHP_EOL;
+    echo "Error: Unable to perform SELECT query." . PHP_EOL;
+    echo "Debugging errno: " . mysqli_errno($database_link) . PHP_EOL;
+    echo "Debugging error: " . mysqli_error($database_link) . PHP_EOL;
+    mysqli_close($database_link);
     exit;
 }
 
@@ -49,7 +53,9 @@ $result = mysqli_query($database_link, $insertion);
 if($result) {
     echo 'true';
 } else {
-    echo 'false';
+    echo "Error: Unable to perform INSERT query." . PHP_EOL;
+    echo "Debugging errno: " . mysqli_errno($database_link) . PHP_EOL;
+    echo "Debugging error: " . mysqli_error($database_link) . PHP_EOL;
 }
 
 mysqli_close($database_link);
