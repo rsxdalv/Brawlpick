@@ -1,2 +1,3 @@
 # In order to avoid overriding context, the context file should remain static
 /context.php
+/db_info.php
