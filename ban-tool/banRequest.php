@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 include "hashing.php";
-include "dbconnect.php";
+include "database/connect.php";
 include "maps.php";
 
 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
@@ -50,5 +50,6 @@ if($result) {
     echo 'true';
 } else {
     echo 'false';
-    exit;
 }
+
+mysqli_close($database_link);
