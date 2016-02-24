@@ -7,6 +7,7 @@
 /* globals */
 var step = 0;
 var token = null;
+var banCooldown = false;
 
 function init()
 {
@@ -32,10 +33,13 @@ function applyVisualBan(map)
 
 function ban(map)
 {
+    if(banCooldown) return;
+    
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function confirmBan(){
         if(xhttp.readyState === 4 && xhttp.status === 200)
         {
+            banCooldown = false;
             if(xhttp.response === "true")
             {
                 applyVisualBan(map);
@@ -45,6 +49,7 @@ function ban(map)
     };
     xhttp.open("GET", "banRequest.php?token="+token+"&map="+map+"&step="+step, true);
     xhttp.send();
+    banCooldown = true;
 }
 
 function listen()
