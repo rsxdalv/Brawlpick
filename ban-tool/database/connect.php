@@ -2,8 +2,8 @@
 if( getenv('OPENSHIFT_PHP_IP') )
 {    
     $mysql_host = getenv(OPENSHIFT_MYSQL_DB_HOST);
-    $mysql_database = getenv(OPENSHIFT_MYSQL_DB_DATABASE);
-    $mysql_user = getenv(OPENSHIFT_MYSQL_DB_USER);
+    $mysql_database = getenv(OPENSHIFT_APP_NAME);
+    $mysql_user = getenv(OPENSHIFT_MYSQL_DB_USERNAME);
     $mysql_password = getenv(OPENSHIFT_MYSQL_DB_PASSWORD);
 }
 else {
