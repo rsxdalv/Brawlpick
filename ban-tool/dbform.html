@@ -7,15 +7,36 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Database Configuration</title>
     </head>
     <body>
-        <form action="db_setup.php" method="POST">
-            Database host: <input type="text" value="" id="mysql_host"><br />
-            Database name: <input type="text" value="" id="mysql_database"><br />
-            Database login: <input type="text" value="" id="mysql_login"><br />
-            Database password: <input type="text" value="" id="mysql_password"><br />
-            <input type="submit" value="Submit" />
+        <form action="database/setup.php" method="post" target="_blank">
+            <fieldset>
+                <legend>Database configuration:</legend>
+                Database host: <input type="text" value="" name="mysql_host" /><br />
+                Database login: <input type="text" value="" name="mysql_login" /><br />
+                Database password: <input type="text" value="" name="mysql_password" /><br />
+                Database name: <input type="text" value="" name="mysql_database" /><br />
+                <input type="submit" value="Save" />
+            </fieldset>
+        </form>
+        <form action="database/deploy.php" target="_blank">
+            <fieldset>
+                <legend>Database Table Creation:</legend>
+                <input type="submit" value="Create Database Table" />
+            </fieldset>
+        </form>
+        <form action="database/reset.php" target="_blank">
+            <fieldset>
+                <legend>Database Table Deletion:</legend>
+                <input type="submit" value="Delete Database Table" />
+            </fieldset>
+        </form>
+        <form action="database/empty.php" target="_blank">
+            <fieldset>
+                <legend>Database Table Tools:</legend>
+                <input type="submit" value="Empty Database Table" />
+            </fieldset>
         </form>
     </body>
 </html>
