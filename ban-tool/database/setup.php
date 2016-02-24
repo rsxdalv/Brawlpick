@@ -17,10 +17,10 @@ $mode = "w";
 $fhandle = fopen($file, $mode);
 
 if ($fhandle) {
-    echo 'success/fhandle';
+    echo 'success/fhandle'.PHP_EOL;
 }
 else {
-    echo 'failure/fhandle';
+    echo 'failure/fhandle'.PHP_EOL;
 }
 
 $contents =
@@ -33,10 +33,12 @@ $mysql_user = "'.$login.'";
 $mysql_password = "'.$password.'";
 ';
 
+echo $contents.PHP_EOL;
+
 $fwrite = fwrite($fhandle, $contents);
 
 if ($fwrite) {
-    echo 'success/fwrite';
+    echo 'success/fwrite'.PHP_EOL;
 }
 else {
     echo 'failure/fwrite';
