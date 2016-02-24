@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-include 'dbconnect.php';
+include 'database/connect.php';
 include 'hashing.php';
 include 'maps.php';
 
@@ -61,18 +61,21 @@ if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
         }
         else
         {
-            
             echo 'false/read';
+            mysqli_close($database_link);
             exit;
         }
     }
     else {
         echo "[-1]"; // JSON Notation
+        mysqli_close($database_link);
         exit;
     }
 }
 else {
     echo 'false/stmt';
+    mysqli_close($database_link);
     exit;
 }
 
+mysqli_close($database_link);
