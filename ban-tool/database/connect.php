@@ -1,11 +1,11 @@
 <?php
-echo $OPENSHIFT_MYSQL_DB_HOST;
-echo $OPENSHIFT_MYSQL_DB_USER;
-echo $OPENSHIFT_MYSQL_DB_PASSWORD;
-echo $OPENSHIFT_MYSQL_DB_DATABASE;
-
-if( isset($OPENSHIFT_MYSQL_DB_HOST) )
-{
+if( getenv('OPENSHIFT_PHP_IP') )
+{    
+    $mysql_host = getenv(OPENSHIFT_MYSQL_DB_HOST);
+    $mysql_database = getenv(OPENSHIFT_MYSQL_DB_DATABASE);
+    $mysql_user = getenv(OPENSHIFT_MYSQL_DB_USER);
+    $mysql_password = getenv(OPENSHIFT_MYSQL_DB_PASSWORD);
+ 
     $database_link = mysqli_connect($OPENSHIFT_MYSQL_DB_HOST, $OPENSHIFT_MYSQL_DB_USER, $OPENSHIFT_MYSQL_DB_PASSWORD, $OPENSHIFT_MYSQL_DB_DATABASE);
 }
 else
