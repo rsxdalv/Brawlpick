@@ -8,6 +8,16 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Database Configuration</title>
+        <style>
+            a.button {
+                -webkit-appearance: button;
+                -moz-appearance: button;
+                appearance: button;
+
+                text-decoration: none;
+                color: initial;
+            }
+        </style>
     </head>
     <body>
         <form action="database/setup.php" method="post" target="_blank">
@@ -20,23 +30,9 @@ and open the template in the editor.
                 <input type="submit" value="Save" />
             </fieldset>
         </form>
-        <form action="database/deploy.php" target="_blank">
-            <fieldset>
-                <legend>Database Table Creation:</legend>
-                <input type="submit" value="Create Database Table" />
-            </fieldset>
-        </form>
-        <form action="database/reset.php" target="_blank">
-            <fieldset>
-                <legend>Database Table Deletion:</legend>
-                <input type="submit" value="Delete Database Table" />
-            </fieldset>
-        </form>
-        <form action="database/empty.php" target="_blank">
-            <fieldset>
-                <legend>Database Table Tools:</legend>
-                <input type="submit" value="Empty Database Table" />
-            </fieldset>
-        </form>
+        <a class="button" href="database/deploy.php">Create Database Table</a>
+        <a class="button" href="database/reset.php">Delete Database Table</a>
+        <a class="button" href="database/empty.php">Empty Database Table</a>
+        <a class="button" href="temporary_template.html">Room Link</a>
     </body>
 </html>
