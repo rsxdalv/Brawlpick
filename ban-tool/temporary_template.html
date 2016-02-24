@@ -9,8 +9,18 @@ and open the template in the editor.
             <title>Map ban tool</title>
             <link rel="Stylesheet" type="text/css" href="style.css" />
             <meta charset="UTF-8">
-            <script type="text/javascript" src="script.js"></script> 
             <script type="text/javascript" src="newScript.js"></script>
+            <script type="text/javascript" src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
+            <script type="text/javascript">
+                var queue = new createjs.LoadQueue(true);
+                queue.loadFile("img/falls_ban.jpg");
+                queue.loadFile("img/fortress_ban.jpg");
+                queue.loadFile("img/grove_ban.jpg");
+                queue.loadFile("img/hall_ban.jpg");
+                queue.loadFile("img/keep_ban.jpg");
+                queue.loadFile("img/pass_ban.jpg");
+                queue.loadFile("img/stadium_ban.jpg");
+            </script>
     </head>
     <body onload='init()'>
         <div id="bantool">
