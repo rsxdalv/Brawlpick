@@ -4,16 +4,9 @@
  * and open the template in the editor.
  */
 
-<$php 
-include 'hashing.php';
-
-
-?>
 /* globals */
 var step = 0;
-var token = null;
 var banCooldown = false;
-var player = -1;
 
 function init()
 {
