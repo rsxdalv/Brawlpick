@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 
+<$php 
+include 'hashing.php';
+
+
+?>
 /* globals */
 var step = 0;
 var token = null;
@@ -13,7 +18,6 @@ var player = -1;
 function init()
 {
     token = encodeURIComponent("N9KoXJgiU5KNJG/iM3H4xA==");
-    player = 1;
     listen();
 }
 
