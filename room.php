@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -24,7 +18,7 @@ and open the template in the editor.
 
                 ?>
                 /* globals */
-                var token = <?php echo json_encode($token) ?>;
+                var token = encodeURIComponent(<?php echo json_encode($token) ?>);
                 var player = <?php echo json_encode($player) ?>;
             </script>
             <script type="text/javascript" src="script.js"></script>
@@ -42,7 +36,7 @@ and open the template in the editor.
     </head>
     <body onload='init()'>
         <div id="bantool">
-            <div><a id="player">You are player 1</a></div>
+            <div><a id="player">You are player <?php echo ($player+1) ?></a></div>
             <!-- document.getElementById("message_text").innerHTML="test" -->
             <div id="message"><a id="message_text">Message Zone</a></div>
             <div class="map" id="keep" onclick="ban('keep')">Blackguard Keep</div>

@@ -11,7 +11,7 @@ $method = 'aes-128-cbc';
 
 function encode_player1($room, $key, $method)
 {
-    echo 'key:' . $key . ' method:' .$method;
+    //echo 'key:' . $key . ' method:' .$method;
     return openssl_encrypt($room & 0xFFFFFFFE, $method, $key);
 }
 

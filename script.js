@@ -10,7 +10,7 @@ var banCooldown = false;
 
 function init()
 {
-    token = encodeURIComponent("N9KoXJgiU5KNJG/iM3H4xA==");
+    //token = encodeURIComponent("N9KoXJgiU5KNJG/iM3H4xA==");
     listen();
 }
 
@@ -39,13 +39,13 @@ function ban(map)
         case 0:
         case 3:
         case 4:
-            if(player !== 1)
+            if(player !== 0)
                 return;
             break;
         case 1:
         case 2:
         case 5:
-            if(player !== 2)
+            if(player !== 1)
                 return;
             break;
         default:
