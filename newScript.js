@@ -8,10 +8,12 @@
 var step = 0;
 var token = null;
 var banCooldown = false;
+var player = -1;
 
 function init()
 {
     token = encodeURIComponent("N9KoXJgiU5KNJG/iM3H4xA==");
+    player = 1;
     listen();
 }
 
@@ -33,7 +35,25 @@ function applyVisualBan(map)
 
 function ban(map)
 {
-    if(banCooldown) return;
+    if(player === -1 || banCooldown)
+        return;
+    
+    switch(step) {
+        case 0:
+        case 3:
+        case 4:
+            if(player !== 1)
+                return;
+            break;
+        case 1:
+        case 2:
+        case 5:
+            if(player !== 2)
+                return;
+            break;
+        default:
+            return;
+    }
     
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function confirmBan(){
