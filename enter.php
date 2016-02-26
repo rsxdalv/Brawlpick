@@ -16,9 +16,11 @@ and open the template in the editor.
         //$room = 556;
         $token = encode_player1($room, $key, $method);
         $token2 = encode_player2($room, $key, $method);
+        $token3 = encode_spectator($room, $key, $method);
         ?>
-        <a href="<?php echo 'room.php?token='.urlencode($token); ?>">Player 1</a>
-        <a href="<?php echo 'room.php?token='.urlencode($token2); ?>">Player 2</a>
-        <input type="text" value="<?php echo 'room.php?token='.urlencode($token2); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly>
+        <a href="<?php echo 'room.php?token='.urlencode($token); ?>">Player 1</a><br />
+        <a href="<?php echo 'room.php?token='.urlencode($token2); ?>">Player 2</a><br />
+        Player 2: <input type="text" value="<?php echo 'room.php?token='.urlencode($token2); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly><br />
+        Spectator: <input type="text" value="<?php echo 'room.php?token='.urlencode($token3); ?>" id="sample2" onClick="this.setSelectionRange(0, this.value.length)" readonly><br />
     </body>
 </html>

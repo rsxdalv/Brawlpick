@@ -32,7 +32,7 @@ function applyVisualBan(map)
 
 function ban(map)
 {
-    if(player === -1 || banCooldown)
+    if(player === 7 || banCooldown)
         return;
     
     switch(step) {
