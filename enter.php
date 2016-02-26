@@ -16,7 +16,7 @@ and open the template in the editor.
     <body>
         <?php
         include 'hashing.php';
-        $room = mt_rand(0, 0x1FFFFFFF) << 3;
+        $room = mt_rand(0, 0xFFFFFFF) << 3;
         $token = encode_player1($room, $key, $method);
         $token2 = encode_player2($room, $key, $method);
         $token3 = encode_spectator($room, $key, $method);
