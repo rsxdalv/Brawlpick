@@ -10,7 +10,7 @@ include 'connect.php';
 
 $create_ban_list_table = 
         "CREATE TABLE `ban_list` (
-        `id` int(11) unsigned NOT NULL,
+        `id` int(11) NOT NULL,
         `room` int(11) NOT NULL,
         `player` int(11) NOT NULL,
         `map` int(11) NOT NULL,
