@@ -49,7 +49,7 @@ else {
 
 $insertion =    "INSERT INTO `ban_list`
                 (`id`, `room`, `player`, `map`, `step`) 
-                VALUES ('".($room | $map)."', '".$room."', '".$player."', '".$map."', '".$step."');";
+                VALUES (X'".dechex($room | $map)."', '".$room."', '".$player."', '".$map."', '".$step."');";
 
 $result = mysqli_query($database_link, $insertion);
 if($result) {
