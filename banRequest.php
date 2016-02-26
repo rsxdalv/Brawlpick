@@ -5,6 +5,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+header("Cache-Control: no-store");
+
 include "hashing.php";
 include "database/connect.php";
 include "maps.php";
