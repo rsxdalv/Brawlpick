@@ -68,7 +68,11 @@ if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
         }
     }
     else {
-        echo "[-1]"; // JSON Notation
+        if ($newStep === null) {
+            $newStep = 0;
+        }
+        echo json_encode(array(-1, $newStep));
+        //echo "[-1]"; // JSON Notation
         mysqli_close($database_link);
         exit;
     }
