@@ -78,6 +78,7 @@ function listen()
                 maps = JSON.parse(xhttp.response);
                 // Error code for no-updates
                 if(maps[0] === -1) {
+                    step = maps[1];
                     listen();
                 }
                 else {
