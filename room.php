@@ -22,8 +22,8 @@ and open the template in the editor.
 
                 ?>
                 /* globals */
-                var token = encodeURIComponent(<?php echo json_encode($token) ?>);
-                var player = <?php echo json_encode($player) ?>;
+                var token = encodeURIComponent(<?php echo json_encode($token); ?>);
+                var player = <?php echo json_encode($player); ?>;
             </script>
             <script type="text/javascript" src="script.js"></script>
             <script type="text/javascript" src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
@@ -40,7 +40,17 @@ and open the template in the editor.
     </head>
     <body onload='init()'>
         <div id="bantool">
-            <div><a id="player">You are player <?php echo ($player+1) ?></a></div>
+            <div>
+                <a id="player">
+                    <?php                                    
+                    if ($player === 7) {
+                        echo "You are spectator";
+                    } else {
+                        echo "You are player ".($player+1);
+                    }
+                    ?>
+                </a>
+            </div>
             <!-- document.getElementById("message_text").innerHTML="test" -->
             <div id="message"><a id="message_text">Message Zone</a></div>
             <div class="map" id="keep" onclick="ban('keep')">Blackguard Keep</div>
