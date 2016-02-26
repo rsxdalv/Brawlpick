@@ -10,7 +10,6 @@ var banCooldown = false;
 
 function init()
 {
-    //token = encodeURIComponent("N9KoXJgiU5KNJG/iM3H4xA==");
     listen();
 }
 
@@ -53,7 +52,7 @@ function ban(map)
     }
     
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function confirmBan(){
+    xhttp.onreadystatechange = function() {
         if(xhttp.readyState === 4 && xhttp.status === 200)
         {
             banCooldown = false;
@@ -72,7 +71,7 @@ function ban(map)
 function listen()
 {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function hear(){
+    xhttp.onreadystatechange = function() {
         if(xhttp.readyState === 4 && xhttp.status === 200) {
             if(xhttp.response !== 'false')
             {
