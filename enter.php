@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <?php
         include 'hashing.php';
-        $room = mt_rand(0, 0xFFFFFFFF) & 0xFFFFFFFE;
+        $room = mt_rand(0, 0xFFFFFFFF >> 3) << 3;
         //$room = 556;
         $token = encode_player1($room, $key, $method);
         $token2 = encode_player2($room, $key, $method);
