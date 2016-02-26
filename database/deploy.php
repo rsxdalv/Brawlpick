@@ -10,13 +10,14 @@ include 'connect.php';
 
 $create_ban_list_table = 
         "CREATE TABLE `ban_list` (
-        `id` int(11) NOT NULL,
+        `id` int(11) unsigned NOT NULL,
         `room` int(11) NOT NULL,
         `player` int(11) NOT NULL,
         `map` int(11) NOT NULL,
         `step` int(11) NOT NULL,
         PRIMARY KEY (`id`)
-       ) ENGINE=InnoDB";
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+
 
 $mysqli_query = mysqli_query($database_link, $create_ban_list_table);
 
