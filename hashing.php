@@ -20,7 +20,7 @@ function encode_player2($room, $key, $method) {
 
 // spectator is player 8
 function encode_spectator($room, $key, $method) {
-    return openssl_encrypt($room | 0x00000007, $method, $password);
+    return openssl_encrypt($room | 0x00000007, $method, $key);
 }
 
 function decode_room($token, $key, $method) {
