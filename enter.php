@@ -11,7 +11,24 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Ban tool form</title>
+        <style type="text/css">
+            a.button {
+                -webkit-appearance: button;
+                -moz-appearance: button;
+                appearance: button;
+
+                display:inline-block;
+                text-decoration: none;
+                color: initial;
+                margin: 3px 1px;
+                padding: 1px;
+            }
+
+            #sample1, #sample2 {
+                width: 475px;
+            }
+        </style>
     </head>
     <body>
         <?php
@@ -22,10 +39,11 @@ and open the template in the editor.
         $token3 = encode_spectator($room, $key, $method);
         $baseURL = "http://localhost:8080/bt/room.php?token=";
         ?>
-        <a href="<?php echo 'room.php?token='.urlencode($token); ?>">Player 1</a><br />
-        <a href="<?php echo 'room.php?token='.urlencode($token2); ?>">Player 2</a><br />
-        <a href="<?php echo 'room.php?token='.urlencode($token3); ?>">Spectator</a><br />
-        Player 2: <input type="text" value="<?php echo $baseURL.urlencode($token2); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly><br />
-        Spectator: <input type="text" value="<?php echo $baseURL.urlencode($token3); ?>" id="sample2" onClick="this.setSelectionRange(0, this.value.length)" readonly><br />
+        <a class="button" href="<?php echo 'room.php?token='.urlencode($token); ?>">Player 1</a>
+        <a class="button" href="<?php echo 'room.php?token='.urlencode($token2); ?>">Player 2</a>
+        <a class="button" href="<?php echo 'room.php?token='.urlencode($token3); ?>">Spectator</a>
+        <br />
+        Player 2: <input type="text" value="<?php echo $baseURL.urlencode($token2); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />
+        Spectator: <input type="text" value="<?php echo $baseURL.urlencode($token3); ?>" id="sample2" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />
     </body>
 </html>
