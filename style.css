@@ -8,8 +8,22 @@ and open the template in the editor.
     Author     : Roberts
 */
 
+html, body{
+    min-height: 100%;
+}
+
 #bantool {
     text-align: center;
+}
+
+#overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: wait;
 }
 
 .map {
@@ -97,16 +111,37 @@ and open the template in the editor.
     background-image:url(img/grove_ban.jpg);
 }
 
+body {
+    background-color: #202030;
+    text-align: center;
+}
+
+div#info {
+    padding: 0px 2px;
+    margin-bottom: 20px;
+}
+
+div#bantool {
+    padding: 10px 10px;
+    margin-bottom: 20px;
+    background-color: #282850;
+    border-radius: 60px;
+    display: inline-block;
+}
+
 /* Message format */
 
-a#message_text
+span#message
 {
+    font-size: 17pt;
+    display:block;
     font-weight: bold;
+    color: #d0d0d0;
 }
 
 #player 
 {
-    font-size: 20pt;
+    font-size: 14pt;
     font-style: italic;
-    color: #404040;
+    color: #e0e0e0;
 }

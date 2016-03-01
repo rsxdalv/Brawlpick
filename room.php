@@ -34,21 +34,15 @@ and open the template in the editor.
                 queue.loadFile("img/stadium_ban.jpg");
             </script>
     </head>
-    <body onload='init()'>
-        <div id="bantool">
+    <body id="body" onload='init()'>
+        <div id="overlay"></div>
+        <div id="info">
             <div>
-                <a id="player">
-                    <?php                                    
-                    if ($player === 7) {
-                        echo "You are spectator";
-                    } else {
-                        echo "You are player ".($player+1);
-                    }
-                    ?>
-                </a>
+                <a id="player"> <?php if ($player === 7) { echo "You are spectator"; } else { echo "You are player ".($player+1); } ?> </a>
             </div>
-            <!-- document.getElementById("message_text").innerHTML="test" -->
-            <div id="message"><a id="message_text">Message Zone</a></div>
+            <span id="message">loading...</span>
+        </div>
+        <div id="bantool">
             <div class="map" id="keep" onclick="ban('keep')">Blackguard Keep</div>
             <div class="map" id="pass" onclick="ban('pass')">Kings Pass</div>
             <div class="map" id="fortress" onclick="ban('fortress')">Mammoth Fortress</div>

@@ -24,9 +24,23 @@ and open the template in the editor.
                 margin: 3px 1px;
                 padding: 1px;
             }
-
+            
             #sample1, #sample2 {
                 width: 475px;
+            }
+            
+            body {
+                background-color: #202030;
+                text-align: center;
+                color: #e0e0e0;
+            }
+            
+            div#wrapper {
+                padding: 10px 10px;
+                margin-bottom: 20px;
+                background-color: #282850;
+                border-radius: 10px;
+                display: inline-block;
             }
         </style>
     </head>
@@ -34,16 +48,43 @@ and open the template in the editor.
         <?php
         include 'hashing.php';
         $room = mt_rand(0, 0xFFFFFFF) << 3;
-        $token = encode_player1($room, $key, $method);
+        $token1 = encode_player1($room, $key, $method);
         $token2 = encode_player2($room, $key, $method);
         $token3 = encode_spectator($room, $key, $method);
         $baseURL = "http://localhost:8080/bt/room.php?token=";
         ?>
-        <a class="button" href="<?php echo 'room.php?token='.urlencode($token); ?>">Player 1</a>
+        <div id="wrapper">
+        <a class="button" href="<?php echo 'room.php?token='.urlencode($token1); ?>">Player 1</a>
         <a class="button" href="<?php echo 'room.php?token='.urlencode($token2); ?>">Player 2</a>
         <a class="button" href="<?php echo 'room.php?token='.urlencode($token3); ?>">Spectator</a>
+        <a class="button" href="enter.php">New room</a>
         <br />
-        Player 2: <input type="text" value="<?php echo $baseURL.urlencode($token2); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />
-        Spectator: <input type="text" value="<?php echo $baseURL.urlencode($token3); ?>" id="sample2" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />
+        <table>
+            <tr>
+                <td>
+                    Player 1:  
+                </td>
+                <td>
+                    <input type="text" value="<?php echo $baseURL.urlencode($token1); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
+                </td>
+            </tr> 
+            <tr>
+                <td>
+                    Player 2:  
+                </td>
+                <td>
+                    <input type="text" value="<?php echo $baseURL.urlencode($token2); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
+                </td>
+            </tr> 
+            <tr>
+                <td>
+                    Spectator:  
+                </td>
+                <td>
+                    <input type="text" value="<?php echo $baseURL.urlencode($token3); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
+                </td>
+            </tr> 
+        </table>
+        </div>
     </body>
 </html>
