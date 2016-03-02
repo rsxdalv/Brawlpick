@@ -7,12 +7,12 @@ and open the template in the editor.
 <html>
     <head>
             <title>Map ban tool</title>
-            <link rel="Stylesheet" type="text/css" href="style.css" />
+            <link rel="Stylesheet" type="text/css" href="css/room.css" />
             <meta charset="UTF-8">
             <script type="text/javascript">  
                 <?php 
 
-                include 'hashing.php';
+                include 'system/hashing.php';
                 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
                 $player = decode_player($token, $key, $method);
 
@@ -21,7 +21,7 @@ and open the template in the editor.
                 var token = encodeURIComponent(<?php echo json_encode($token); ?>);
                 var player = <?php echo json_encode($player); ?>;
             </script>
-            <script type="text/javascript" src="script.js"></script>
+            <script type="text/javascript" src="js/room.js"></script>
             <script type="text/javascript" src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
             <script type="text/javascript">
                 var queue = new createjs.LoadQueue(true);
