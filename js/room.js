@@ -10,6 +10,7 @@ var banCooldown = false;
 
 function init()
 {
+    listenOnce();
     listen();
     setLoadingAnimation(false);
 }
@@ -79,7 +80,7 @@ function listen()
         if(xhttp.readyState === 4 && xhttp.status === 200) {
             if(xhttp.response !== 'false')
             {
-                maps = JSON.parse(xhttp.response);
+                var maps = JSON.parse(xhttp.response);
                 // Error code for no-updates
                 setLoadingAnimation(false);
                 if(maps[0] === -1) {
@@ -98,6 +99,33 @@ function listen()
         }
     };
     xhttp.open("GET", "system/listener.php?token="+token+"&step="+step, true);
+    xhttp.send();
+}
+
+function listenOnce()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(xhttp.readyState === 4 && xhttp.status === 200) {
+            if(xhttp.response !== 'false')
+            {
+                var maps = JSON.parse(xhttp.response);
+                setLoadingAnimation(false);
+                // Error code for no-updates
+                if(maps[0] === -1) {
+                    step = maps[1];
+                    message(step);
+                }
+                else {
+                    step = maps[0];
+                    message(step);
+                    for(i = 1; i < maps.length; i++)
+                        applyVisualBan(maps[i]);
+                }
+            }
+        }
+    };
+    xhttp.open("GET", "system/listenOnce.php?token="+token+"&step="+step, true);
     xhttp.send();
 }
 

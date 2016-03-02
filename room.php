@@ -11,11 +11,9 @@ and open the template in the editor.
             <meta charset="UTF-8">
             <script type="text/javascript">  
                 <?php 
-
                 include 'system/hashing.php';
                 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
                 $player = decode_player($token, $key, $method);
-
                 ?>
                 /* globals */
                 var token = encodeURIComponent(<?php echo json_encode($token); ?>);
@@ -53,9 +51,6 @@ and open the template in the editor.
             <div class="map" id="stadium" onclick="ban('stadium')">Thundergard Stadium</div>
             <div class="map" id="grove" onclick="ban('grove')">Twilight Grove</div>
             <br />
-        </div>
-        
-        <div id="tool">
         </div>
     </body>
 </html>
