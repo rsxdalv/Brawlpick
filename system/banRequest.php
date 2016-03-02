@@ -11,20 +11,41 @@ include "hashing.php";
 include "database/connect.php";
 include "maps.php";
 
+
 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
-$mapName = filter_input(INPUT_GET, "map", FILTER_SANITIZE_STRING);
+
+$player = decode_player($token, $key, $method); //decode_player($token);
+
 $step = filter_input(INPUT_GET, "step", FILTER_SANITIZE_NUMBER_INT);
+
+switch($player) {
+    case 0:
+    case 3:
+    case 4:
+        if(player !== 0) {
+            return;
+        }
+        break;
+    case 1:
+    case 2:
+    case 5:
+        if(player !== 1) {
+            return;
+        }
+        break;
+    default:
+        return;
+}
 
 $step += 1;
 
-//assert($mapName !== NULL);
+$room = decode_room($token, $key, $method);
+
+$mapName = filter_input(INPUT_GET, "map", FILTER_SANITIZE_STRING);
 
 $map = $mapList[$mapName];
 
 assert($map !== NULL);
-
-$room = decode_room($token, $key, $method);
-$player = decode_player($token, $key, $method); //decode_player($token);
 
 $duplicateQuery =   "SELECT *  
                     FROM `ban_list` 
