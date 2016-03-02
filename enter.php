@@ -46,7 +46,7 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        include 'hashing.php';
+        include 'system/hashing.php';
         $room = mt_rand(0, 0xFFFFFFF) << 3;
         $token1 = encode_player1($room, $key, $method);
         $token2 = encode_player2($room, $key, $method);

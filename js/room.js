@@ -67,7 +67,7 @@ function ban(map)
             }
         }
     };
-    xhttp.open("GET", "banRequest.php?token="+token+"&map="+map+"&step="+step, true);
+    xhttp.open("GET", "system/banRequest.php?token="+token+"&map="+map+"&step="+step, true);
     xhttp.send();
     banCooldown = true;
 }
@@ -97,7 +97,7 @@ function listen()
             }
         }
     };
-    xhttp.open("GET", "listener.php?token="+token+"&step="+step, true);
+    xhttp.open("GET", "system/listener.php?token="+token+"&step="+step, true);
     xhttp.send();
 }
 
