@@ -90,7 +90,7 @@ html, body{
 }
 
 #hall:hover {
-    background-image:url(img/hall_ban.jpg);
+    background-image:url(../img/hall_ban.jpg);
 }
 
 
