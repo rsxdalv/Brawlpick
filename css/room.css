@@ -13,7 +13,10 @@ html, body{
 }
 
 body {
+    text-align: center;
+    background-size: cover;
     background-image: url(../img/background.jpg);
+    align-content: center;
 }
 
 #bantool {
@@ -40,6 +43,7 @@ body {
     font-size: 15pt;
     cursor: pointer;
     text-shadow: -1px 0 #505050, 0 1px #505050, 1px 0 #505050, 0 -1px #505050;
+    margin: 4px 2px;
 }
 
 .map:hover :not(.banned){
@@ -115,20 +119,18 @@ body {
     background-image:url(../img/grove_ban.jpg);
 }
 
-body {
-    background-color: #202030;
-    text-align: center;
-}
-
 div#info {
-    padding: 0px 2px;
-    margin-bottom: 20px;
+    padding: 5px;
+    margin: 0px auto 10px auto;
+    background-color: rgba(40,40,80, 0.5);
+    width: 220px;
+    border-radius: 22px;
 }
 
 div#bantool {
     padding: 10px 10px;
     margin-bottom: 20px;
-    background-color: #282850;
+    background-color: rgba(40,40,80, 0.5);
     border-radius: 60px;
     display: inline-block;
 }
@@ -143,7 +145,7 @@ span#message
     color: #d0d0d0;
 }
 
-#player 
+span#player 
 {
     font-size: 14pt;
     font-style: italic;
