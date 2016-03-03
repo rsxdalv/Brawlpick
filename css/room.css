@@ -12,6 +12,10 @@ html, body{
     min-height: 100%;
 }
 
+body {
+    background-image: url(../img/background.jpg);
+}
+
 #bantool {
     text-align: center;
 }
