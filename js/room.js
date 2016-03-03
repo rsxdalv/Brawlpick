@@ -15,20 +15,20 @@ function init()
     setLoadingAnimation(false);
 }
 
+function applyVisualBan(map)
+{
+    var mapElement = document.getElementById(map);
+    mapElement.className = "map banned";
+    mapElement.style.backgroundImage = "url('img/maps_banned.jpg')";
+    mapElement.setAttribute('onclick', '');
+}
+
 function removeVisualBan(map)
 {
     var mapElement = document.getElementById(map);
     mapElement.className = "map";
-    mapElement.style.backgroundImage = "url('img/"+map+".jpg')";
+    mapElement.style.backgroundImage = "url('img/maps.jpg')";
     mapElement.setAttribute('onclick', 'ban('+map+')');
-}
-
-function applyVisualBan(map)
-{
-    var mapElement = document.getElementById(map);
-    mapElement.className += " banned";
-    mapElement.style.backgroundImage = "url('img/"+map+"_ban.jpg')";
-    mapElement.setAttribute('onclick', '');
 }
 
 function ban(map)

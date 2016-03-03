@@ -24,19 +24,13 @@ and open the template in the editor.
             <script type="text/javascript" src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
             <script type="text/javascript">
                 var queue = new createjs.LoadQueue(true);
-                queue.loadFile("img/falls_ban.jpg");
-                queue.loadFile("img/fortress_ban.jpg");
-                queue.loadFile("img/grove_ban.jpg");
-                queue.loadFile("img/hall_ban.jpg");
-                queue.loadFile("img/keep_ban.jpg");
-                queue.loadFile("img/pass_ban.jpg");
-                queue.loadFile("img/stadium_ban.jpg");
+                queue.loadFile("img/maps_banned.jpg");
             </script>
     </head>
     <body id="body" onload='init()'>
         <div id="overlay"></div>
         <div id="info">
-            <span id="player"> <?php if ($player === 7) { echo "You are spectator"; } else { echo "You are player ".($player+1); } ?> </span>
+            <span id="player"> <?php if ($player === 7) { echo "You are a spectator"; } else { echo "You are player ".($player+1); } ?> </span>
             <span id="message">loading...</span>
         </div>
         <div id="bantool">

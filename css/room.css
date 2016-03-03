@@ -34,8 +34,8 @@ body {
 }
 
 .map {
-    width: 285px;
-    height: 165px;
+    width: 281px;
+    height: 157px;
     display: inline-block;
     border-radius: 45px;
     color: #E0E0E0;
@@ -44,6 +44,11 @@ body {
     cursor: pointer;
     text-shadow: -1px 0 #505050, 0 1px #505050, 1px 0 #505050, 0 -1px #505050;
     margin: 4px 2px;
+    background-image: url(../img/maps.jpg);
+}
+
+.map:hover {
+    background-image: url(../img/maps_banned.jpg);
 }
 
 .map:hover :not(.banned){
@@ -54,76 +59,68 @@ body {
     cursor: default;
     text-decoration: line-through;
     font-style: italic;
+    color: #000;
 }
 
 /* Icon section */
+#falls {
+    background-position: 0px 0px;
+}
+/*#falls:hover {
+    background-position: -281px 0px;
+}*/
+
 
 #keep {
-    background-image:url(../img/keep.jpg);
+    background-position: 0px -628px;
 }
-
-#keep:hover {
-    background-image:url(../img/keep_ban.jpg);
-}
+/*#keep:hover {
+    background-position: -281px -628px;
+}*/
 
 #pass {
-    background-image:url(../img/pass.jpg);
+    background-position: 0px -785px;
 }
-
-#pass:hover {
-    background-image:url(../img/pass_ban.jpg);
-}
+/*#pass:hover {
+    background-position: -281px -785px;
+}*/
 
 
 #fortress {
-    background-image:url(../img/fortress.jpg);
+    background-position: 0px -157px;
 }
-
-#fortress:hover {
-    background-image:url(../img/fortress_ban.jpg);
-}
-
-
-#falls {
-    background-image:url(../img/falls.jpg);
-}
-
-#falls:hover {
-    background-image:url(../img/falls_ban.jpg);
-}
-
+/*#fortress:hover {
+    background-position: -281px -157px;
+}*/
 
 #hall {
-    background-image:url(../img/hall.jpg);
+    background-position: 0px -471px;
 }
-
-#hall:hover {
-    background-image:url(../img/hall_ban.jpg);
-}
+/*#hall:hover {
+    background-position: -281px -471px;
+}*/
 
 
 #stadium {
-    background-image:url(../img/stadium.jpg);
+    background-position: 0px -942px;
 }
-
-#stadium:hover {
-    background-image:url(../img/stadium_ban.jpg);
-}
+/*#stadium:hover {
+    background-position: -281px -942px;
+}*/
 
 
 #grove {
-    background-image:url(../img/grove.jpg);
+    background-position: 0px -314px;
 }
-
-#grove:hover {
-    background-image:url(../img/grove_ban.jpg);
-}
+/*#grove:hover {
+    background-position: -281px -314px;
+}*/
 
 div#info {
     padding: 5px;
     margin: 0px auto 10px auto;
     background-color: rgba(40,40,80, 0.5);
-    width: 220px;
+    width: 280px;
     border-radius: 22px;
 }
 
