@@ -36,9 +36,7 @@ and open the template in the editor.
     <body id="body" onload='init()'>
         <div id="overlay"></div>
         <div id="info">
-            <div>
-                <a id="player"> <?php if ($player === 7) { echo "You are spectator"; } else { echo "You are player ".($player+1); } ?> </a>
-            </div>
+            <span id="player"> <?php if ($player === 7) { echo "You are spectator"; } else { echo "You are player ".($player+1); } ?> </span>
             <span id="message">loading...</span>
         </div>
         <div id="bantool">
