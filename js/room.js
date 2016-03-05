@@ -132,7 +132,7 @@ function listenOnce()
 /* Messages */
 var player1 = ["Your turn to ban 1/6", "Opponent's turn 2/6", "Opponent's turn 3/6", "Your turn 4/6", "Your turn 5/6", "Opponent's turn 6/6", "Bans Finished"];
 var player2 = ["Opponent's turn to ban 1/6", "Your turn 2/6", "Your turn 3/6", "Opponent's turn 4/6", "Opponent's turn 5/6", "Your turn 6/6", "Bans Finished"];
-var specator = ["Player 1's turn to ban 1/6", "Player 2's turn to ban 1/6", "Player 2's turn to ban 1/6", "Player 1's turn to ban 1/6", "Player 1's turn to ban 1/6", "Player 2's turn to ban 1/6", "Bans Finished"];
+var specator = ["Player 1's turn to ban 1/6", "Player 2's turn to ban 2/6", "Player 2's turn to ban 3/6", "Player 1's turn to ban 4/6", "Player 1's turn to ban 5/6", "Player 2's turn to ban 6/6", "Bans Finished"];
 
 function message(step) {
     switch(player) {
