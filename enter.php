@@ -51,7 +51,8 @@ and open the template in the editor.
         $token1 = encode_player1($room, $key, $method);
         $token2 = encode_player2($room, $key, $method);
         $token3 = encode_spectator($room, $key, $method);
-        $baseURL = "http://localhost:8080/bt/room.php?token=";
+        //$baseURL = "http://localhost:8080/bt/room.php?token=";
+        $baseURL = "http://draft-rsxdalv.rhcloud.com/room.php?token=";
         ?>
         <div id="wrapper">
         <a class="button" href="<?php echo 'room.php?token='.urlencode($token1); ?>">Player 1</a>
