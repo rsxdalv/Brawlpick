@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
     <head>
             <title>Map ban tool</title>
-            <link rel="Stylesheet" type="text/css" href="css/room.css" />
+            <link rel="stylesheet" type="text/css" href="css/room.css" />
             <link rel="icon" href="img/icon.ico" />
             <meta charset="UTF-8">
             <script type="text/javascript">  
