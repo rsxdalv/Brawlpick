@@ -11,9 +11,9 @@ define("USER_SPECTATOR", 7);
 define("USER_PLAYER1", 0);
 define("USER_PLAYER2", 1);
         
-$key = 'A172343B239823C9';
-$method = 'aes-128-cbc';
-$iv = '1';
+$key = 'A172343B239823C9'; // 16 bytes hexadecimal
+$method = 'aes-128-cbc'; // Simple AES method
+$iv = '1A2B3C4E1A2B3C4E';  // 16 bytes hexadecimal
 
 function encode_player1($room) {
     global $key, $method, $iv;
