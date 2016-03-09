@@ -9,23 +9,28 @@
 $key = 'A172343B239823C9';
 $method = 'aes-128-cbc';
 
-function encode_player1($room, $key, $method) {
+function encode_player1($room) {
+    global $key, $method;
     return openssl_encrypt( $room & 0xFFFFFFFE , $method, $key);
 }
 
-function encode_player2($room, $key, $method) {
+function encode_player2($room) {
+    global $key, $method;
     return openssl_encrypt( $room | 0x00000001 , $method, $key);
 }
 
 // spectator is player 8
-function encode_spectator($room, $key, $method) {
+function encode_spectator($room) {
+    global $key, $method;
     return openssl_encrypt( $room | 0x00000007 , $method, $key);
 }
 
-function decode_room($token, $key, $method) {
+function decode_room($token) {
+    global $key, $method;
     return openssl_decrypt($token, $method, $key) & 0xFFFFFFF8;
 }
 
-function decode_player($token, $key, $method) {
+function decode_player($token) {
+    global $key, $method;
     return openssl_decrypt($token, $method, $key) & 0x00000007;
 }
