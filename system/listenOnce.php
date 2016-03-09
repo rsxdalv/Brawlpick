@@ -15,53 +15,42 @@ $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
 $room = decode_room($token);
 
-$listenQuery = "SELECT `step` 
-                FROM `ban_list` 
-                WHERE `room` = ? 
-                ORDER BY `step` DESC 
-                LIMIT 1";
+$listenQuery = 
+        "SELECT `step` 
+        FROM `ban_list` 
+        WHERE `room` = ".$room."
+        ORDER BY `step` DESC 
+        LIMIT 1";
 
-if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
-    mysqli_stmt_bind_param($stmt, "i", $room);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $newStep);
-    mysqli_stmt_fetch($stmt);
-    mysqli_stmt_close($stmt);
-    
-    $readQuery =  "SELECT map 
-            FROM `ban_list` 
-            WHERE `room` = ".$room.";";
-
-    if ($newStep === null) {
-        $newStep = 0;
-    }
-    
-    $mysqli_result = mysqli_query($database_link, $readQuery);
-    if($mysqli_result)
+$listenResult = $db->query($listenQuery);
+if($listenResult) {
+    if($listenResult->num_rows > 0)
     {
         $maps = array();
-        $maps[0] = $newStep;
-        while($row = mysqli_fetch_array($mysqli_result)) {
+        $maps[0] = $listenResult->fetch_array()[0];
+        $readQuery =    
+                "SELECT map 
+                FROM `ban_list` 
+                WHERE `room` = ".$room.";";
+        $readResult = $db->query($readQuery);
+        if($readResult) {
+            while($row = $readResult->fetch_array())
+            {
                 $maps[] = $mapList[$row[0]];
+            }
+            $readResult->close();
+            echo json_encode($maps);
+            exit;
+        } else {
+            print_db_error($db, $readQuery);
+            exit;
         }
-
-        mysqli_free_result($mysqli_result);
-        echo json_encode($maps);
+    } 
+    else {
+        echo json_encode( array( NO_UPDATES, NO_MAPS_BANNED ) ); // No maps banned.
         exit;
     }
-    else
-    {
-        echo 'false/read';
-        mysqli_close($database_link);
-        exit;
-    }
-    
-    echo json_encode(array(-1, $newStep));
+} else {
+    print_db_error($db, $listenQuery);
     exit;
 }
-else {
-    echo 'false/stmt';
-    exit;
-}
-
-mysqli_close($database_link);

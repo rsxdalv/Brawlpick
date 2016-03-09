@@ -12,26 +12,25 @@ include 'hashing.php';
 include 'maps.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
-
 $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
-
 $room = decode_room($token);
 
-$listenQuery = "SELECT `step` 
-                FROM `ban_list` 
-                WHERE `room` = ? 
-                ORDER BY `step` DESC 
-                LIMIT 1";
+$listenQuery = 
+        "SELECT `step` 
+        FROM `ban_list` 
+        WHERE `room` = ? 
+        ORDER BY `step` DESC 
+        LIMIT 1";
 
 // NB: Sleep time does not mess with PHP's max_execution_time on Linux, while on Windows this might be broken.
-if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
-    mysqli_stmt_bind_param($stmt, "i", $room);
-    //mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $newStep);
-    //mysqli_stmt_fetch($stmt);
+$stmt = $db->prepare($listenQuery);
+if($stmt) 
+{
+    $stmt->bind_param("i", $room);
+    $stmt->bind_result($newStep);
     for($i = 0; $i < 150; $i++) { // 15 Second execution blocks
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_fetch($stmt);
+        $stmt->execute();
+        $stmt->fetch();
 //        echo 'new step: '.$newStep . PHP_EOL;
 //        echo 'old step: '.$step . PHP_EOL;
         if($newStep > $step) {
@@ -40,47 +39,35 @@ if( $stmt = mysqli_prepare($database_link, $listenQuery) ){
         }
         usleep(33333); // 30 Checks per second
     }
-    mysqli_stmt_close($stmt);
+    $stmt->close();
     if($newStep > $step)
     {
-        //echo 'success stepping in'. PHP_EOL;
-        $readQuery =  "SELECT map 
+        $maps = array();
+        $maps[0] = $newStep;
+        $readQuery =    
+                "SELECT map 
                 FROM `ban_list` 
                 WHERE `room` = ".$room.";";
-
-        $mysqli_result = mysqli_query($database_link, $readQuery);
-        if($mysqli_result)
-        {
-            $maps = array();
-            $maps[0] = $newStep;
-            while($row = mysqli_fetch_array($mysqli_result)) {
-                    $maps[] = $mapList[$row[0]];
+        $readResult = $db->query($readQuery);
+        if($readResult) {
+            while($row = $readResult->fetch_array())
+            {
+                $maps[] = $mapList[$row[0]];
             }
-
-            mysqli_free_result($mysqli_result);
+            $readResult->close();
             echo json_encode($maps);
-        }
-        else
-        {
-            echo 'false/read';
-            mysqli_close($database_link);
+            exit;
+        } else {
+            print_db_error($db, $readQuery);
             exit;
         }
     }
     else {
-        if ($newStep === null) {
-            $newStep = 0;
-        }
-        echo json_encode(array(-1, $newStep));
-        //echo "[-1]"; // JSON Notation
-        mysqli_close($database_link);
+        echo json_encode( array( NO_UPDATES, $newStep ) ); // No maps banned.
         exit;
     }
 }
 else {
-    echo 'false/stmt';
-    mysqli_close($database_link);
+    print_db_error($db, $listenQuery);
     exit;
 }
-
-mysqli_close($database_link);
