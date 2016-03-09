@@ -51,6 +51,14 @@ and open the template in the editor.
         $token1 = encode_player1($room);
         $token2 = encode_player2($room);
         $token3 = encode_spectator($room);
+        $server_name = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_URL);
+        $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_NUMBER_INT);
+        if($server_name === 'localhost')
+        {
+            $URL = "http://".$server_name.":".$port."/bt/room.php?token=";
+        } else {
+            $URL = "http://".$server_name."/room.php?token=";
+        }
         //$baseURL = "http://localhost:8080/bt/room.php?token=";
         $baseURL = "http://draft-rsxdalv.rhcloud.com/room.php?token=";
         ?>
@@ -66,7 +74,7 @@ and open the template in the editor.
                     Player 1:  
                 </td>
                 <td>
-                    <input type="text" value="<?php echo $baseURL.urlencode($token1); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
+                    <input type="text" value="<?php echo $URL.urlencode($token1); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
                 </td>
             </tr> 
             <tr>
@@ -74,7 +82,7 @@ and open the template in the editor.
                     Player 2:  
                 </td>
                 <td>
-                    <input type="text" value="<?php echo $baseURL.urlencode($token2); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
+                    <input type="text" value="<?php echo $URL.urlencode($token2); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
                 </td>
             </tr> 
             <tr>
@@ -82,7 +90,7 @@ and open the template in the editor.
                     Spectator:  
                 </td>
                 <td>
-                    <input type="text" value="<?php echo $baseURL.urlencode($token3); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
+                    <input type="text" value="<?php echo $URL.urlencode($token3); ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br />  
                 </td>
             </tr> 
         </table>
