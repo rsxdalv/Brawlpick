@@ -50,7 +50,7 @@ $result = $db->query($duplicateQuery);
 if($result) {
     if($result->num_rows > 0)
     {
-        echo "Tool Error: Map Already Banned!" . PHP_EOL;
+        echo json_encode( array(FALSE, $step-1) );
         exit;
     }
     $result->close();
@@ -66,7 +66,7 @@ $insertQuery =    "INSERT INTO `ban_list`
 
 $result2 = $db->query($insertQuery);
 if($result2) {
-    echo 'true';
+    echo json_encode( array(TRUE, $step) );
 } else {
     print_db_error($db, $insertQuery);
     exit;
