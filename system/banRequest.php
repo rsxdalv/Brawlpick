@@ -12,7 +12,7 @@ include "database/connect.php";
 include "maps.php";
 
 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
-$player = decode_player($token, $key, $method); //decode_player($token);
+$player = decode_player($token);
 $step = filter_input(INPUT_GET, "step", FILTER_SANITIZE_NUMBER_INT);
 
 switch($step) {
@@ -38,7 +38,7 @@ switch($step) {
 }
 
 $step += 1;
-$room = decode_room($token, $key, $method);
+$room = decode_room($token);
 $mapName = filter_input(INPUT_GET, "map", FILTER_SANITIZE_STRING);
 $map = $mapList[$mapName];
 assert($map !== NULL);

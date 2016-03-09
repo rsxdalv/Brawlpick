@@ -13,7 +13,7 @@ include 'maps.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
-$room = decode_room($token, $key, $method);
+$room = decode_room($token);
 
 $listenQuery = "SELECT `step` 
                 FROM `ban_list` 

@@ -12,8 +12,8 @@ $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
 echo "Token: !".$token."! <br />";
 
-$room = decode_room($token, $key, $method);
-$player = decode_player($token, $key, $method);
+$room = decode_room($token);
+$player = decode_player($token);
 
 echo "Room: !".$room."! <br />";
 echo "Player: !".$player."! <br />";

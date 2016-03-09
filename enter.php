@@ -48,9 +48,9 @@ and open the template in the editor.
         <?php
         include 'system/hashing.php';
         $room = mt_rand(0, 0xFFFFFFF) << 3;
-        $token1 = encode_player1($room, $key, $method);
-        $token2 = encode_player2($room, $key, $method);
-        $token3 = encode_spectator($room, $key, $method);
+        $token1 = encode_player1($room);
+        $token2 = encode_player2($room);
+        $token3 = encode_spectator($room);
         //$baseURL = "http://localhost:8080/bt/room.php?token=";
         $baseURL = "http://draft-rsxdalv.rhcloud.com/room.php?token=";
         ?>
