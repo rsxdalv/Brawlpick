@@ -66,55 +66,30 @@ body {
 #falls {
     background-position: 0px 0px;
 }
-/*#falls:hover {
-    background-position: -281px 0px;
-}*/
-
 
 #keep {
     background-position: 0px -628px;
 }
-/*#keep:hover {
-    background-position: -281px -628px;
-}*/
 
 #pass {
     background-position: 0px -785px;
 }
-/*#pass:hover {
-    background-position: -281px -785px;
-}*/
-
 
 #fortress {
     background-position: 0px -157px;
 }
-/*#fortress:hover {
-    background-position: -281px -157px;
-}*/
 
 #hall {
     background-position: 0px -471px;
 }
-/*#hall:hover {
-    background-position: -281px -471px;
-}*/
-
 
 #stadium {
     background-position: 0px -942px;
 }
-/*#stadium:hover {
-    background-position: -281px -942px;
-}*/
-
 
 #grove {
     background-position: 0px -314px;
 }
-/*#grove:hover {
-    background-position: -281px -314px;
-}*/
 
 div#info {
     padding: 5px;
