@@ -59,10 +59,11 @@ function ban(map)
         if(xhttp.readyState === 4 && xhttp.status === 200)
         {
             banCooldown = false;
-            if(xhttp.response === "true")
+            var response = JSON.parse(xhttp.response);
+            if(response[0] === true)
             {
                 applyVisualBan(map);
-                step += 1;
+                step = response[1];
                 message(step);
                 setLoadingAnimation(false);
             }
@@ -81,8 +82,8 @@ function listen()
             if(xhttp.response !== 'false')
             {
                 var maps = JSON.parse(xhttp.response);
-                // Error code for no-updates
                 setLoadingAnimation(false);
+                // Error code for no-updates
                 if(maps[0] === -1) {
                     step = maps[1];
                     message(step);
@@ -93,7 +94,7 @@ function listen()
                     message(step);
                     for(i = 1; i < maps.length; i++)
                         applyVisualBan(maps[i]);
-                    listen(); // Should be delayed by about 1000ms by server
+                    listen();
                 }
             }
         }
