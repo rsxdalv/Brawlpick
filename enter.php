@@ -12,37 +12,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title>Ban tool form</title>
-        <style type="text/css">
-            a.button {
-                -webkit-appearance: button;
-                -moz-appearance: button;
-                appearance: button;
-
-                display:inline-block;
-                text-decoration: none;
-                color: initial;
-                margin: 3px 1px;
-                padding: 1px;
-            }
-            
-            #sample1, #sample2 {
-                width: 475px;
-            }
-            
-            body {
-                background-color: #202030;
-                text-align: center;
-                color: #e0e0e0;
-            }
-            
-            div#wrapper {
-                padding: 10px 10px;
-                margin-bottom: 20px;
-                background-color: #282850;
-                border-radius: 10px;
-                display: inline-block;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/entrance.css" />
     </head>
     <body>
         <?php
