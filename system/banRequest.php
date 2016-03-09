@@ -46,34 +46,28 @@ $duplicateQuery =   "SELECT *
                     FROM `ban_list` 
                     WHERE `id` = ".$room.$map." ;";
 
-if($result = mysqli_query($database_link, $duplicateQuery)) {
-    $numDuplicates = mysqli_num_rows($result);
-    mysqli_free_result($result);
-    if($numDuplicates) {
-        echo "Error: Unable to perform SELECT query." . PHP_EOL; // Attempt to ban a banned map.
-        mysqli_close($database_link);
+$result = $db->query($duplicateQuery);
+if($result) {
+    if($result->num_rows > 0)
+    {
+        echo "Tool Error: Map Already Banned!" . PHP_EOL;
         exit;
     }
+    $result->close();
 }
 else {
-    echo "Error: Unable to perform SELECT query." . PHP_EOL;
-    echo "Debugging errno: " . mysqli_errno($database_link) . PHP_EOL;
-    echo "Debugging error: " . mysqli_error($database_link) . PHP_EOL;
-    mysqli_close($database_link);
+    print_db_error($db, $duplicateQuery);
     exit;
 }
 
-$insertion =    "INSERT INTO `ban_list`
+$insertQuery =    "INSERT INTO `ban_list`
                 (`id`, `room`, `player`, `map`, `step`) 
                 VALUES ('".($room | $map)."', '".$room."', '".$player."', '".$map."', '".$step."');";
 
-$result = mysqli_query($database_link, $insertion);
-if($result) {
+$result2 = $db->query($insertQuery);
+if($result2) {
     echo 'true';
 } else {
-    echo "Error: Unable to perform INSERT query." . PHP_EOL;
-    echo "Debugging errno: " . mysqli_errno($database_link) . PHP_EOL;
-    echo "Debugging error: " . mysqli_error($database_link) . PHP_EOL;
+    print_db_error($db, $insertQuery);
+    exit;
 }
-
-mysqli_close($database_link);
