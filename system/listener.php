@@ -63,6 +63,9 @@ if($stmt)
         }
     }
     else {
+        if($newStep === NULL) {
+            $newStep = 0;
+        }
         echo json_encode( array( NO_UPDATES, $newStep ) ); // No maps banned.
         exit;
     }
