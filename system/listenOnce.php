@@ -8,12 +8,13 @@
 header('Cache-Control: no-store');
 
 include 'database/connect.php';
-include 'hashing.php';
+include 'Room.class.php';
 include 'maps.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
-$room = decode_room($token);
+$roomObj = new Room($token);
+$room = $roomObj->id;
 
 $listenQuery = 
         'SELECT `step` 

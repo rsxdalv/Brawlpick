@@ -5,17 +5,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-include 'hashing.php';
+include 'Room.class.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
-echo "Token: !".$token."! <br />";
+if(!isset($token)) {
+    $roomObj = new Room();
+    $token = $roomObj->getToken(Room::USER_PLAYER1);
+} else {
+    $roomObj = new Room($token);
+}
 
-$room = decode_room($token);
-$player = decode_player($token);
-
-echo "Room: !".$room."! <br />";
-echo "Player: !".$player."! <br />";
-
-
+echo "Token: '".$roomObj->token."' <br />";
+echo "Room: '".$roomObj->id."' <br />";
+echo "Player: '".$roomObj->player."' <br />";
