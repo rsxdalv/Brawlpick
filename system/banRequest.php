@@ -20,7 +20,7 @@ switch($step) {
     case 3:
     case 4:
         if($player !== 0) {
-            echo 'false/step';
+            echo json_encode( array(FALSE, $step));
             exit();
         }
         break;
@@ -28,12 +28,12 @@ switch($step) {
     case 2:
     case 5:
         if($player !== 1) {
-            echo 'false/step';
+            echo json_encode( array(FALSE, $step));
             exit();
         }
         break;
     default:
-        echo 'false/step';
+        echo json_encode( array(FALSE, $step));
         exit();
 }
 
@@ -44,7 +44,7 @@ $map = $mapList[$mapName];
 assert($map !== NULL);
 $duplicateQuery =   'SELECT *  
                     FROM `ban_list` 
-                    WHERE `id` = '.$room.$map.' ;';
+                    WHERE `id` = '.$room.$map.';';
 
 $result = $db->query($duplicateQuery);
 if($result) {
