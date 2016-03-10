@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-header("Cache-Control: no-store");
+header('Cache-Control: no-store');
 
 include 'database/connect.php';
 include 'hashing.php';
@@ -16,11 +16,11 @@ $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $room = decode_room($token);
 
 $listenQuery = 
-        "SELECT `step` 
+        'SELECT `step` 
         FROM `ban_list` 
-        WHERE `room` = ".$room."
+        WHERE `room` = '.$room.'
         ORDER BY `step` DESC 
-        LIMIT 1";
+        LIMIT 1';
 
 $listenResult = $db->query($listenQuery);
 if($listenResult) {
@@ -29,9 +29,9 @@ if($listenResult) {
         $maps = array();
         $maps[0] = $listenResult->fetch_array()[0];
         $readQuery =    
-                "SELECT map 
+                'SELECT map 
                 FROM `ban_list` 
-                WHERE `room` = ".$room.";";
+                WHERE `room` = '.$room.';';
         $readResult = $db->query($readQuery);
         if($readResult) {
             while($row = $readResult->fetch_array())

@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-header("Cache-Control: no-store");
+header('Cache-Control: no-store');
 
 include 'database/connect.php';
 include 'hashing.php';
@@ -16,17 +16,17 @@ $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
 $room = decode_room($token);
 
 $listenQuery = 
-        "SELECT `step` 
+        'SELECT `step` 
         FROM `ban_list` 
         WHERE `room` = ? 
         ORDER BY `step` DESC 
-        LIMIT 1";
+        LIMIT 1';
 
 // NB: Sleep time does not mess with PHP's max_execution_time on Linux, while on Windows this might be broken.
 $stmt = $db->prepare($listenQuery);
 if($stmt) 
 {
-    $stmt->bind_param("i", $room);
+    $stmt->bind_param('i', $room);
     $stmt->bind_result($newStep);
     for($i = 0; $i < 150; $i++) { // 15 Second execution blocks
         $stmt->execute();
@@ -45,9 +45,9 @@ if($stmt)
         $maps = array();
         $maps[0] = $newStep;
         $readQuery =    
-                "SELECT map 
+                'SELECT map 
                 FROM `ban_list` 
-                WHERE `room` = ".$room.";";
+                WHERE `room` = '.$room.';';
         $readResult = $db->query($readQuery);
         if($readResult) {
             while($row = $readResult->fetch_array())
