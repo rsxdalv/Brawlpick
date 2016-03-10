@@ -1,5 +1,5 @@
 <?php 
-header("Cache-Control: no-store");
+header('Cache-Control: no-store');
 ?>
 
 <!DOCTYPE html>
@@ -16,21 +16,19 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        include 'system/hashing.php';
-        $room = mt_rand(0, 0xFFFFFFF) << 3;
-        $token1 = encode_player1($room);
-        $token2 = encode_player2($room);
-        $token3 = encode_spectator($room);
+        include 'system/Room.class.php';
+        $roomObj = new Room();
+        $room = $roomObj->id;
+        $token1 = $roomObj->getToken(Room::USER_PLAYER1);
+        $token2 = $roomObj->getToken(Room::USER_PLAYER2);
+        $token3 = $roomObj->getToken(Room::USER_SPECTATOR);
         $server_name = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_URL);
         $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_NUMBER_INT);
-        if($server_name === 'localhost')
-        {
-            $URL = "http://".$server_name.":".$port."/bt/room.php?token=";
+        if($server_name === 'localhost') {
+            $URL = 'http://'.$server_name.':'.$port.'/bt/room.php?token=';
         } else {
-            $URL = "http://".$server_name."/room.php?token=";
+            $URL = 'http://'.$server_name.'/room.php?token=';
         }
-        //$baseURL = "http://localhost:8080/bt/room.php?token=";
-        $baseURL = "http://draft-rsxdalv.rhcloud.com/room.php?token=";
         ?>
         <div id="wrapper">
         <a class="button" href="<?php echo 'room.php?token='.urlencode($token1); ?>">Player 1</a>
