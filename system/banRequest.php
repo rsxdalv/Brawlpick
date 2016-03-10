@@ -5,15 +5,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-header("Cache-Control: no-store");
+header('Cache-Control: no-store');
 
-include "hashing.php";
-include "database/connect.php";
-include "maps.php";
+include 'hashing.php';
+include 'database/connect.php';
+include 'maps.php';
 
-$token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
+$token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $player = decode_player($token);
-$step = filter_input(INPUT_GET, "step", FILTER_SANITIZE_NUMBER_INT);
+$step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
 
 switch($step) {
     case 0:
@@ -39,12 +39,12 @@ switch($step) {
 
 $step += 1;
 $room = decode_room($token);
-$mapName = filter_input(INPUT_GET, "map", FILTER_SANITIZE_STRING);
+$mapName = filter_input(INPUT_GET, 'map', FILTER_SANITIZE_STRING);
 $map = $mapList[$mapName];
 assert($map !== NULL);
-$duplicateQuery =   "SELECT *  
+$duplicateQuery =   'SELECT *  
                     FROM `ban_list` 
-                    WHERE `id` = ".$room.$map." ;";
+                    WHERE `id` = '.$room.$map.' ;';
 
 $result = $db->query($duplicateQuery);
 if($result) {
@@ -60,9 +60,9 @@ else {
     exit;
 }
 
-$insertQuery =    "INSERT INTO `ban_list`
+$insertQuery =    'INSERT INTO `ban_list`
                 (`id`, `room`, `player`, `map`, `step`) 
-                VALUES ('".($room | $map)."', '".$room."', '".$player."', '".$map."', '".$step."');";
+                VALUES ("'.($room | $map).'", "'.$room.'", "'.$player.'", "'.$map.'", "'.$step.'");';
 
 $result2 = $db->query($insertQuery);
 if($result2) {
