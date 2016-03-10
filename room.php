@@ -12,9 +12,10 @@ and open the template in the editor.
             <meta charset="UTF-8">
             <script type="text/javascript">  
                 <?php 
-                include 'system/hashing.php';
+                include 'system/Room.class.php';
                 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
-                $player = decode_player($token);
+                $roomObj = new Room();
+                $player = $roomObj->player;
                 ?>
                 /* globals */
                 var token = encodeURIComponent(<?php echo json_encode($token); ?>);

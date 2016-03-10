@@ -27,7 +27,7 @@ class Room {
     function __construct($token = NULL) {
         if(isset($token)) {
             $this->token = $token;
-            $room_and_player = openssl_decrypt( $this->id , self::$method, self::$key, 0, self::$iv);
+            $room_and_player = openssl_decrypt( $token , self::$encryption, self::$key, 0, self::$iv);
             $this->id = $room_and_player & 0xFFFFFFF8;
             $this->player = $room_and_player & 0x00000007;
         } else {
@@ -38,6 +38,7 @@ class Room {
     public function getToken($player = NULL) {
         if (isset($player)) {
             $this->token = openssl_encrypt( $this->id | $player , self::$encryption, self::$key, 0, self::$iv);
+            $this->player = $player;
         }
         return $this->token;
     }
@@ -45,5 +46,4 @@ class Room {
     private function generateId() {
         $this->id = mt_rand(0, 0xFFFFFFF) << 3;
     }
-    
 }

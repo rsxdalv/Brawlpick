@@ -7,19 +7,22 @@
  */
 header('Cache-Control: no-store');
 
-include 'hashing.php';
 include 'database/connect.php';
+include 'Room.class.php';
 include 'maps.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
-$player = decode_player($token);
 $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
+
+$roomObj = new Room($token);
+$player = $roomObj->player;
+
 
 switch($step) {
     case 0:
     case 3:
     case 4:
-        if($player !== 0) {
+        if($player !== Room::USER_PLAYER1) {
             echo json_encode( array(FALSE, $step));
             exit();
         }
@@ -27,7 +30,7 @@ switch($step) {
     case 1:
     case 2:
     case 5:
-        if($player !== 1) {
+        if($player !== Room::USER_PLAYER2) {
             echo json_encode( array(FALSE, $step));
             exit();
         }
@@ -37,14 +40,16 @@ switch($step) {
         exit();
 }
 
-$step += 1;
-$room = decode_room($token);
+$step++;
+$room = $roomObj->id;
 $mapName = filter_input(INPUT_GET, 'map', FILTER_SANITIZE_STRING);
 $map = $mapList[$mapName];
 assert($map !== NULL);
-$duplicateQuery =   'SELECT *  
-                    FROM `ban_list` 
-                    WHERE `id` = '.$room.$map.';';
+
+$duplicateQuery =   
+        'SELECT *  
+        FROM `ban_list` 
+        WHERE `id` = '.$room.$map.';';
 
 $result = $db->query($duplicateQuery);
 if($result) {
@@ -60,9 +65,10 @@ else {
     exit;
 }
 
-$insertQuery =    'INSERT INTO `ban_list`
-                (`id`, `room`, `player`, `map`, `step`) 
-                VALUES ("'.($room | $map).'", "'.$room.'", "'.$player.'", "'.$map.'", "'.$step.'");';
+$insertQuery =    
+        'INSERT INTO `ban_list`
+        (`id`, `room`, `player`, `map`, `step`) 
+        VALUES ("'.($room | $map).'", "'.$room.'", "'.$player.'", "'.$map.'", "'.$step.'");';
 
 $result2 = $db->query($insertQuery);
 if($result2) {
