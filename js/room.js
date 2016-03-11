@@ -10,9 +10,9 @@ var banCooldown = false;
 
 function init()
 {
-    listenOnce();
+    synchronize();
     listen();
-    setLoadingAnimation(false);
+    //setLoadingAnimation(false);
 }
 
 function applyVisualBan(map)
@@ -88,8 +88,7 @@ function listen()
                     step = maps[1];
                     message(step);
                     listen();
-                }
-                else {
+                } else {
                     step = maps[0];
                     message(step);
                     for(i = 1; i < maps.length; i++)
@@ -103,7 +102,7 @@ function listen()
     xhttp.send();
 }
 
-function listenOnce()
+function synchronize()
 {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -116,8 +115,7 @@ function listenOnce()
                 if(maps[0] === -1) {
                     step = maps[1];
                     message(step);
-                }
-                else {
+                } else {
                     step = maps[0];
                     message(step);
                     for(i = 1; i < maps.length; i++)
@@ -126,7 +124,7 @@ function listenOnce()
             }
         }
     };
-    xhttp.open("GET", "system/listenOnce.php?token="+token+"&step="+step, true);
+    xhttp.open("GET", "system/synchronize.php?token="+token+"&step="+step, true);
     xhttp.send();
 }
 
