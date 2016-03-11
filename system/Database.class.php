@@ -13,11 +13,9 @@
 class Database {
     private $db;
     
-    
     private static $mapList = array('keep' => 1, 'pass' => 2, 'fortress' => 3, 'falls' => 4, 'hall' => 5, 'stadium' => 6, 'grove' => 7, 
             '1' => 'keep', '2' => 'pass', '3' => 'fortress', '4' => 'falls', '5' => 'hall', '6' => 'stadium', '7' => 'grove');
 
-    
     public function __construct() {
         if( getenv('OPENSHIFT_PHP_IP') ) {    
             $mysql_host = getenv('OPENSHIFT_MYSQL_DB_HOST');
@@ -39,42 +37,57 @@ class Database {
         }
     }
     
-    public function ban($room, $player, $step, $map) {
+    public function ban($room, $player, $map) {
+        
+        $step = $this->getStep($room);
+        if($step === NULL) {
+            $step = 1;
+        } else {
+            $step++;
+        }
+        
         $duplicateQuery =   
                 'SELECT *  
                 FROM `ban_list` 
                 WHERE `id` = '.($room | $map).';';
-
-        $result = $this->db->query($duplicateQuery);
-        if($result) {
-            if($result->num_rows > 0) {
-                return json_encode( array(FALSE, $step-1) );
-            }
-            $result->close();
-        } else {
-            $this->error($duplicateQuery);
+        
+        $result = $this->query($duplicateQuery);
+        if($result->num_rows > 0) {
+            return json_encode( array(FALSE, $step-1) );
         }
+        $result->close();
 
         $insertQuery =    
                 'INSERT INTO `ban_list`
                 (`id`, `room`, `player`, `map`, `step`) 
                 VALUES ("'.($room | $map).'", "'.$room.'", "'.$player.'", "'.$map.'", "'.$step.'");';
 
-        $result2 = $this->db->query($insertQuery);
-        if($result2) {
-            return json_encode( array(TRUE, $step) );
+        $result2 = $this->query($insertQuery);
+        return json_encode( array(TRUE, $step) );
+    }
+    
+    public function getStep($room) {
+        $stepQuery = 
+                'SELECT `step` 
+                FROM `ban_list` 
+                WHERE `room` = '.$room.'
+                ORDER BY `step` DESC 
+                LIMIT 1';
+        
+        $stepResult = $this->query($stepQuery);
+        if($stepResult->num_rows > 0) {
+            return $stepResult->fetch_array()[0];
         } else {
-            $this->error($insertQuery);
+            return NULL;
+//            return json_encode( array( NO_UPDATES, NO_MAPS_BANNED ) ); // No maps banned.
         }
     }
-    public function getStep($room) {
-        
-    }
+    
     public function listen($room, $step) {
         $listenQuery = 
                 'SELECT `step` 
                 FROM `ban_list` 
-                WHERE `room` = ? 
+                WHERE `room` = '.$room.' 
                 ORDER BY `step` DESC 
                 LIMIT 1';
 
@@ -83,9 +96,9 @@ class Database {
         $newStep = 0;
         if($stmt) 
         {
-            $stmt->bind_param('i', $room);
+//            $stmt->bind_param('i', $room);
             $stmt->bind_result($newStep);
-            for($i = 0; $i < 150; $i++) { // 15 Second execution blocks
+            for($i = 0; $i < 450; $i++) { // 15 Second execution blocks
                 $stmt->execute();
                 $stmt->fetch();
                 if($newStep > $step) {
@@ -96,26 +109,12 @@ class Database {
             $stmt->close();
             if($newStep > $step)
             {
-                $maps = array();
-                $maps[0] = $newStep;
-                $readQuery =    
-                        'SELECT map 
-                        FROM `ban_list` 
-                        WHERE `room` = '.$room.';';
-                $readResult = $this->db->query($readQuery);
-                if($readResult) {
-                    while($row = $readResult->fetch_array()) {
-                        $maps[] = self::$mapList[$row[0]];
-                    }
-                    $readResult->close();
-                    return json_encode($maps);
-                } else {
-                    $this->error($readQuery);
-                }
+                $maps = $this->getBans($room);
+                return json_encode( array_merge((array)$newStep, $maps) );
             } else {
-                if($newStep === NULL) {
-                    $newStep = 0;
-                }
+//                if($newStep === NULL) {
+//                    $newStep = 0;
+//                }
                 return json_encode( array( NO_UPDATES, $newStep ) ); // No maps banned.
             }
         } else {
@@ -127,38 +126,42 @@ class Database {
     }
     public function synchronize($room)
     {
-        $listenQuery = 
-                'SELECT `step` 
-                FROM `ban_list` 
-                WHERE `room` = '.$room.'
-                ORDER BY `step` DESC 
-                LIMIT 1';
-
-        $listenResult = $this->db->query($listenQuery);
-        if($listenResult) {
-            if($listenResult->num_rows > 0) {
-                $maps = array();
-                $maps[0] = $listenResult->fetch_array()[0];
-                $readQuery =    
-                        'SELECT map 
-                        FROM `ban_list` 
-                        WHERE `room` = '.$room.';';
-                
-                $readResult = $this->db->query($readQuery);
-                if($readResult) {
-                    while($row = $readResult->fetch_array()) {
-                        $maps[] = self::$mapList[$row[0]];
-                    }
-                    $readResult->close();
-                    return json_encode($maps);
-                } else {
-                    $this->error($readQuery);
-                }
-            } else {
-                return json_encode( array( NO_UPDATES, NO_MAPS_BANNED ) ); // No maps banned.
-            }
+        $step = $this->getStep($room);
+        if($step !== NULL) {
+            $maps = $this->getBans($room);
+            return json_encode( array_merge((array)$step, $maps) );
         } else {
-            $this->error($listenQuery);
+            return json_encode( array( NO_UPDATES, NO_MAPS_BANNED ) ); // No maps banned.
+        }
+    }
+    
+    public function getBans($room) {
+        $bansQuery =    
+                'SELECT map 
+                FROM `ban_list` 
+                WHERE `room` = '.$room.';';
+
+        $bansResult = $this->query($bansQuery);
+        if($bansResult->num_rows > 0) {
+            $maps = array();
+            while($row = $bansResult->fetch_array()) {
+                $maps[] = self::$mapList[$row[0]];
+            }
+            $bansResult->close();
+            return $maps;
+        } else {
+            return NULL;
+        }
+    }
+    
+    private function query($query) {
+        $result = $this->db->query($query);
+        if($result) {
+            return $result;
+        } else {
+            echo "DB query error. #".$this->db->errno.": ".$this->db->error.PHP_EOL;
+            echo "Query: ".$query.PHP_EOL;
+            exit;
         }
     }
     
