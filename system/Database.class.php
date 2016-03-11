@@ -112,9 +112,9 @@ class Database {
                 $maps = $this->getBans($room);
                 return json_encode( array_merge((array)$newStep, $maps) );
             } else {
-//                if($newStep === NULL) {
-//                    $newStep = 0;
-//                }
+                if($newStep === NULL) {
+                    $newStep = 0;
+                }
                 return json_encode( array( NO_UPDATES, $newStep ) ); // No maps banned.
             }
         } else {
