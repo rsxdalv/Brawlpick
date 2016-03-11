@@ -46,4 +46,4 @@ switch($step) {
 $step++;
 
 $database = new Database();
-echo $database->ban($room, $player, $step, $map);
+echo $database->ban($room, $player, $map);
