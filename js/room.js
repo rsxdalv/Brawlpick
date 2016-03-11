@@ -6,12 +6,31 @@
 
 /* globals */
 var player, token; // externally assigned globals
-var step = 0, banCooldown = false;
+var step = 0, banCooldown = false, timer;
 
 function init() {
     synchronize();
     listen();
     connect();
+    //init_countdown();
+}
+
+function countdown() {
+    var d = new Date();
+    var t = timer - d.getTime();
+    var s = Math.floor( t/1000 );
+    var s10 = Math.floor( t/100 ) % 10;
+    document.getElementById("timer").innerHTML = s + "." + s10;
+}
+
+function init_countdown() {
+    resetCountdown();
+    setInterval(countdown, 100);
+}
+
+function resetCountdown() {
+    var d = new Date();
+    timer = d.getTime() + 15000;
 }
 
 function applyVisualBan(map) {
@@ -63,6 +82,7 @@ function ban(map)
                 step = response[1];
                 message(step);
                 setLoadingAnimation(false);
+                resetCountdown();
             }
         }
     };
@@ -86,6 +106,7 @@ function listen()
                     message(step);
                     listen();
                 } else {
+                    resetCountdown();
                     step = maps[0];
                     message(step);
                     for(i = 1; i < maps.length; i++)
@@ -115,6 +136,7 @@ function synchronize()
                 } else {
                     step = maps[0];
                     message(step);
+                    resetCountdown();
                     for(i = 1; i < maps.length; i++)
                         applyVisualBan(maps[i]);
                 }
