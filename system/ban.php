@@ -7,16 +7,19 @@
  */
 header('Cache-Control: no-store');
 
-include 'database/connect.php';
+include 'Database.class.php';
 include 'Room.class.php';
 include 'maps.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
+$mapName = filter_input(INPUT_GET, 'map', FILTER_SANITIZE_STRING);
 
 $roomObj = new Room($token);
 $player = $roomObj->player;
-
+$room = $roomObj->id;
+$map = $mapList[$mapName];
+assert($map !== NULL);
 
 switch($step) {
     case 0:
@@ -41,39 +44,6 @@ switch($step) {
 }
 
 $step++;
-$room = $roomObj->id;
-$mapName = filter_input(INPUT_GET, 'map', FILTER_SANITIZE_STRING);
-$map = $mapList[$mapName];
-assert($map !== NULL);
 
-$duplicateQuery =   
-        'SELECT *  
-        FROM `ban_list` 
-        WHERE `id` = '.$room.$map.';';
-
-$result = $db->query($duplicateQuery);
-if($result) {
-    if($result->num_rows > 0)
-    {
-        echo json_encode( array(FALSE, $step-1) );
-        exit;
-    }
-    $result->close();
-}
-else {
-    print_db_error($db, $duplicateQuery);
-    exit;
-}
-
-$insertQuery =    
-        'INSERT INTO `ban_list`
-        (`id`, `room`, `player`, `map`, `step`) 
-        VALUES ("'.($room | $map).'", "'.$room.'", "'.$player.'", "'.$map.'", "'.$step.'");';
-
-$result2 = $db->query($insertQuery);
-if($result2) {
-    echo json_encode( array(TRUE, $step) );
-} else {
-    print_db_error($db, $insertQuery);
-    exit;
-}
+$database = new Database();
+echo $database->ban($room, $player, $step, $map);

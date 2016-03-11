@@ -5,26 +5,23 @@
  */
 
 /* globals */
-var step = 0;
-var banCooldown = false;
+var player, token; // externally assigned globals
+var step = 0, banCooldown = false;
 
-function init()
-{
+function init() {
     synchronize();
     listen();
-    //setLoadingAnimation(false);
+    connect();
 }
 
-function applyVisualBan(map)
-{
+function applyVisualBan(map) {
     var mapElement = document.getElementById(map);
     mapElement.className = "map banned";
     mapElement.style.backgroundImage = "url('img/maps_banned.jpg')";
     mapElement.setAttribute('onclick', '');
 }
 
-function removeVisualBan(map)
-{
+function removeVisualBan(map) {
     var mapElement = document.getElementById(map);
     mapElement.className = "map";
     mapElement.style.backgroundImage = "url('img/maps.jpg')";
@@ -69,7 +66,7 @@ function ban(map)
             }
         }
     };
-    xhttp.open("GET", "system/banRequest.php?token="+token+"&map="+map+"&step="+step, true);
+    xhttp.open("GET", "system/ban.php?token="+token+"&map="+map+"&step="+step, true);
     xhttp.send();
     banCooldown = true;
 }
@@ -98,7 +95,7 @@ function listen()
             }
         }
     };
-    xhttp.open("GET", "system/listener.php?token="+token+"&step="+step, true);
+    xhttp.open("GET", "system/listen.php?token="+token+"&step="+step, true);
     xhttp.send();
 }
 
@@ -126,6 +123,10 @@ function synchronize()
     };
     xhttp.open("GET", "system/synchronize.php?token="+token+"&step="+step, true);
     xhttp.send();
+}
+
+function connect() {
+    // placeholder
 }
 
 /* Messages */
