@@ -14,7 +14,7 @@ and open the template in the editor.
                 <?php 
                 include 'system/Room.class.php';
                 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
-                $roomObj = new Room();
+                $roomObj = new Room($token);
                 $player = $roomObj->player;
                 ?>
                 /* globals */
