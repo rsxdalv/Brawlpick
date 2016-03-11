@@ -109,7 +109,7 @@ div#bantool {
 
 /* Message format */
 
-span#message
+span#message, span#timer
 {
     font-size: 17pt;
     display:block;
