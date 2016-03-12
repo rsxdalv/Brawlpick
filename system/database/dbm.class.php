@@ -15,6 +15,9 @@ class dbm {
     const DELETE = 0;
     const CLEAR = 1;
     const CREATE = 2;
+    const CREATE_ROOMS = 3;
+    const DELETE_ROOMS = 4;
+    const CLEAR_ROOMS = 5;
     private $db;
     
     public function __construct() {
@@ -44,7 +47,7 @@ class dbm {
                 $query = 'DROP TABLE `ban_list`;';
                 break;
             case self::CLEAR :
-                $query = 'DELETE FROM `ban_list`';
+                $query = 'TRUNCATE TABLE `ban_list`';
                 break;
             case self::CREATE :
                 $query = 
@@ -56,6 +59,21 @@ class dbm {
                         `step` int(11) NOT NULL,
                         PRIMARY KEY (`id`)
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8';
+                break;
+            case self::DELETE_ROOMS :
+                $query = 'DROP TABLE `rooms`;'; 
+                break;
+            case self::CLEAR_ROOMS :
+                $query = 'TRUNCATE TABLE `rooms`';
+                break;
+            case self::CREATE_ROOMS :
+                $query = 
+                        'CREATE TABLE `rooms` (
+                        `id` int(11) NOT NULL,
+                        `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        PRIMARY KEY (`id`),
+                        KEY `id` (`id`)
+                       ) ENGINE=InnoDB DEFAULT CHARSET=utf8';
                 break;
             default :
                 echo 'No Query Specified!' . PHP_EOL;
