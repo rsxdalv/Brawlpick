@@ -11,6 +11,10 @@
  * @author rober
  */
 class Database {
+    const BAN_TIMEOUT = 15000000;
+    const NO_MAPS_BANNED = 0;
+    const NO_UPDATES = -1;
+
     private $db;
     
     private static $mapList = array('keep' => 1, 'pass' => 2, 'fortress' => 3, 'falls' => 4, 'hall' => 5, 'stadium' => 6, 'grove' => 7, 
@@ -62,7 +66,7 @@ class Database {
                 (`id`, `room`, `player`, `map`, `step`) 
                 VALUES ("'.($room | $map).'", "'.$room.'", "'.$player.'", "'.$map.'", "'.$step.'");';
 
-        $result2 = $this->query($insertQuery);
+        $this->query($insertQuery);
         return json_encode( array(TRUE, $step) );
     }
     
@@ -79,7 +83,6 @@ class Database {
             return $stepResult->fetch_array()[0];
         } else {
             return NULL;
-//            return json_encode( array( NO_UPDATES, NO_MAPS_BANNED ) ); // No maps banned.
         }
     }
     
@@ -96,7 +99,6 @@ class Database {
         $newStep = 0;
         if($stmt) 
         {
-//            $stmt->bind_param('i', $room);
             $stmt->bind_result($newStep);
             for($i = 0; $i < 450; $i++) { // 15 Second execution blocks
                 $stmt->execute();
@@ -115,23 +117,20 @@ class Database {
                 if($newStep === NULL) {
                     $newStep = 0;
                 }
-                return json_encode( array( NO_UPDATES, $newStep ) ); // No maps banned.
+                return json_encode( array( self::NO_UPDATES, $newStep ) ); // No maps banned.
             }
         } else {
             $this->error($listenQuery);
         }
     }
-    public function checkIn($room, $player) {
-        
-    }
-    public function synchronize($room)
-    {
+    
+    public function synchronize($room) {
         $step = $this->getStep($room);
         if($step !== NULL) {
             $maps = $this->getBans($room);
             return json_encode( array_merge((array)$step, $maps) );
         } else {
-            return json_encode( array( NO_UPDATES, NO_MAPS_BANNED ) ); // No maps banned.
+            return json_encode( array( self::NO_UPDATES, self::NO_MAPS_BANNED ) ); // No maps banned.
         }
     }
     
@@ -152,6 +151,116 @@ class Database {
         } else {
             return NULL;
         }
+    }
+    
+    public function checkIn($room, $player) {
+        $checkInQuery =
+                'INSERT INTO `rooms` (`id`)
+                VALUES ("'.($room | $player).'")';
+        $this->query($checkInQuery);
+        return true; 
+    }
+    
+    public function meet($room, $player) {
+        $meetQuery = 
+                'SELECT `timestamp` 
+                FROM `rooms` 
+                WHERE `id` = '.($room | $player).';';
+
+        // NB: Sleep time does not mess with PHP's max_execution_time on Linux, while on Windows this might be broken.
+        $stmt = $this->db->prepare($meetQuery);
+        $timestamp = 0;
+        if($stmt) 
+        {
+            $stmt->bind_result($timestamp);
+            for($i = 0; $i < 60; $i++) { // 60 Second timeout
+                $stmt->execute();
+                $stmt->fetch();
+                if($timestamp) {
+                    break;
+                }
+                usleep(1000000); // 1 Check per second
+            }
+            $stmt->close();
+            if($timestamp) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            $this->error($meetQuery);
+        }
+    }
+    
+    public function timeout($room) {
+        $listenQuery = 
+                'SELECT `step` 
+                FROM `ban_list` 
+                WHERE `room` = '.$room.' 
+                ORDER BY `step` DESC 
+                LIMIT 1';
+
+        // NB: Sleep time does not mess with PHP's max_execution_time on Linux, while on Windows this might be broken.
+        $stmt = $this->db->prepare($listenQuery);
+        $step = 0;
+        $newStep = 0;
+        if(!$stmt) {
+            $this->error($listenQuery);
+        }
+        
+        $stmt->bind_result($newStep);
+        $time = self::BAN_TIMEOUT;
+        while($step < 6) {
+            usleep($time);
+            $stmt->execute();
+            $stmt->fetch();
+            if($newStep > $step) {
+                $step = $newStep;
+                $time = self::BAN_TIMEOUT - 0;//$this->getTimeStamp($room);
+                $stmt->free_result();
+            } else {
+                $step++;
+                $time = self::BAN_TIMEOUT;
+                $stmt->free_result();
+                $this->penalty($room);
+            }
+        }
+        
+        $stmt->close();
+        if($newStep > $step)
+        {
+            $maps = $this->getBans($room);
+            return json_encode( array_merge((array)$newStep, $maps) );
+        } else {
+            if($newStep === NULL) {
+                $newStep = 0;
+            }
+            return json_encode( array( self::NO_UPDATES, $newStep ) ); // No maps banned.
+        }
+    }
+    
+    public function penalty($room) {
+        $bansQuery =    
+                'SELECT `map` 
+                FROM `ban_list` 
+                WHERE `room` = '.$room.';';
+
+        $bansResult = $this->query($bansQuery);
+        if($bansResult->num_rows > 0) {
+            $maps = array();
+            while($row = $bansResult->fetch_array()) {
+                $maps[] = $row[0];
+            }
+            /* NB: $difference is NOT a numeric array */
+            $difference = array_diff(range(1, 7), $maps);
+            /* mt_rand here generates a key, not an index! */
+            $selection = $difference[array_rand($difference)];
+            //$selection = $difference[mt_rand(1, count($difference))];
+            $bansResult->close();
+        } else {
+            $selection = mt_rand(1, 7);
+        }
+        $this->ban($room, 7, $selection);
     }
     
     private function query($query) {

@@ -6,13 +6,14 @@
 
 /* globals */
 var player, token; // externally assigned globals
-var step = 0, banCooldown = false, timer;
+var step = 0, banCooldown = false, timer, timerHandle;
 
 function init() {
     synchronize();
     listen();
-    connect();
-    //init_countdown();
+    if(player !== 7)
+        connect();
+    init_countdown();
 }
 
 function countdown() {
@@ -25,7 +26,7 @@ function countdown() {
 
 function init_countdown() {
     resetCountdown();
-    setInterval(countdown, 100);
+    timerHandle = setInterval(countdown, 100);
 }
 
 function resetCountdown() {
@@ -80,9 +81,8 @@ function ban(map)
             {
                 applyVisualBan(map);
                 step = response[1];
-                message(step);
+                update(step);
                 setLoadingAnimation(false);
-                resetCountdown();
             }
         }
     };
@@ -99,16 +99,14 @@ function listen()
             if(xhttp.response !== 'false')
             {
                 var maps = JSON.parse(xhttp.response);
-                setLoadingAnimation(false);
                 // Error code for no-updates
                 if(maps[0] === -1) {
                     step = maps[1];
-                    message(step);
+                    update(step);
                     listen();
                 } else {
-                    resetCountdown();
                     step = maps[0];
-                    message(step);
+                    update(step);
                     for(i = 1; i < maps.length; i++)
                         applyVisualBan(maps[i]);
                     listen();
@@ -132,11 +130,10 @@ function synchronize()
                 // Error code for no-updates
                 if(maps[0] === -1) {
                     step = maps[1];
-                    message(step);
+                    update(step);
                 } else {
                     step = maps[0];
-                    message(step);
-                    resetCountdown();
+                    update(step);
                     for(i = 1; i < maps.length; i++)
                         applyVisualBan(maps[i]);
                 }
@@ -147,26 +144,43 @@ function synchronize()
     xhttp.send();
 }
 
-function connect() {
-    // placeholder
+function connect()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if(xhttp.readyState === 4 && xhttp.status === 200) {
+            if(JSON.parse(xhttp.response) !== true) {
+                alert("Error connecting!");
+            }
+        }
+    };
+    xhttp.open("GET", "system/connect.php?token="+token, true);
+    xhttp.send();
 }
 
 /* Messages */
-var player1 = ["Your turn to ban 1/6", "Opponent's turn 2/6", "Opponent's turn 3/6", "Your turn 4/6", "Your turn 5/6", "Opponent's turn 6/6", "Bans Finished"];
-var player2 = ["Opponent's turn to ban 1/6", "Your turn 2/6", "Your turn 3/6", "Opponent's turn 4/6", "Opponent's turn 5/6", "Your turn 6/6", "Bans Finished"];
-var specator = ["Player 1's turn to ban 1/6", "Player 2's turn to ban 2/6", "Player 2's turn to ban 3/6", "Player 1's turn to ban 4/6", "Player 1's turn to ban 5/6", "Player 2's turn to ban 6/6", "Bans Finished"];
+var player1 = ["Your turn to ban 1/6", "Opponent's turn 2/6", "Opponent's turn 3/6", "Your turn 4/6", "Your turn 5/6", "Opponent's turn 6/6"];
+var player2 = ["Opponent's turn to ban 1/6", "Your turn 2/6", "Your turn 3/6", "Opponent's turn 4/6", "Opponent's turn 5/6", "Your turn 6/6"];
+var specator = ["Player 1's turn to ban 1/6", "Player 2's turn to ban 2/6", "Player 2's turn to ban 3/6", "Player 1's turn to ban 4/6", "Player 1's turn to ban 5/6", "Player 2's turn to ban 6/6"];
 
-function message(step) {
-    switch(player) {
-        case 0:
-            displayMessage(player1[step]);
-            break;
-        case 1:
-            displayMessage(player2[step]);
-            break;
-        default:
-            displayMessage(specator[step]);
-            break;
+function update(step) {
+    resetCountdown();
+    if(step === 6) {
+        displayMessage("Bans Finished!");
+        clearTimeout(timerHandle);
+        document.getElementById("timer").innerHTML = "0.0";
+    } else {
+        switch(player) {
+            case 0:
+                displayMessage(player1[step]);
+                break;
+            case 1:
+                displayMessage(player2[step]);
+                break;
+            default:
+                displayMessage(specator[step]);
+                break;
+        }
     }
 }
 

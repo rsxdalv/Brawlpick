@@ -37,9 +37,12 @@ and open the template in the editor.
         <form action="maintenance.php" method="post" target="_self">
             <fieldset>
                 <legend>Maintenance functions</legend>
-                <input type="radio" name="action" value="clear" />Clear<br />
-                <input type="radio" name="action" value="create" />Create<br />
-                <input type="radio" name="action" value="delete" />Delete<br />
+                <input type="radio" name="action" value="clear" />Clear bans<br />
+                <input type="radio" name="action" value="create" />Create bans<br />
+                <input type="radio" name="action" value="delete" />Delete bans<br />
+                <input type="radio" name="action" value="clear_rooms" />Clear rooms<br />
+                <input type="radio" name="action" value="create_rooms" />Create rooms<br />
+                <input type="radio" name="action" value="delete_rooms" />Delete rooms<br />
                 <input type="radio" name="action" value="tokenDebugger" />Open token debugger<br />
                 <input type="submit" value="Execute" />
             </fieldset>
@@ -61,6 +64,15 @@ and open the template in the editor.
                 case 'delete':
                     $dbm->perform(dbm::DELETE);
                     break;
+                case 'clear_rooms':
+                    $dbm->perform(dbm::CLEAR_ROOMS);
+                    break;
+                case 'delete_rooms':
+                    $dbm->perform(dbm::DELETE_ROOMS);
+                    break;
+                case 'create_rooms':
+                    $dbm->perform(dbm::CREATE_ROOMS);
+                    break;
                 case 'configure':
                     $host = filter_input(INPUT_POST, 'mysql_host', FILTER_SANITIZE_URL);
                     $login = filter_input(INPUT_POST, 'mysql_login', FILTER_SANITIZE_STRING);
@@ -70,6 +82,7 @@ and open the template in the editor.
                     break;
                 case 'tokenDebugger':
                     include 'token_debugger.php';
+                    echo '<a href="token_debugger.php">link</a>';
                     break;
             }
             ?></span>
