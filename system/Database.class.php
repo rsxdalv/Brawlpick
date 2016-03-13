@@ -125,7 +125,7 @@ class Database {
         $step = $this->getStep($room);
         if($step !== NULL) {
             $maps = $this->getBans($room);
-            return json_encode( array( 'updates' => true, 'step' => $step, 'maps' => $maps) );
+            return json_encode( array( 'updates' => true, 'step' => intval($step), 'maps' => $maps) );
         } else {
             return json_encode( array( 'updates' => false ) ); // No maps banned.
         }
@@ -164,7 +164,6 @@ class Database {
                 FROM `rooms` 
                 WHERE `id` = '.($room | $player).';';
 
-        // NB: Sleep time does not mess with PHP's max_execution_time on Linux, while on Windows this might be broken.
         $stmt = $this->db->prepare($meetQuery);
         $timestamp = 0;
         if($stmt) 
@@ -197,7 +196,6 @@ class Database {
                 ORDER BY `step` DESC 
                 LIMIT 1';
 
-        // NB: Sleep time does not mess with PHP's max_execution_time on Linux, while on Windows this might be broken.
         $stmt = $this->db->prepare($listenQuery);
         $step = 0;
         $newStep = 0;
@@ -222,18 +220,7 @@ class Database {
                 $this->penalty($room);
             }
         }
-        
         $stmt->close();
-        if($newStep > $step)
-        {
-            $maps = $this->getBans($room);
-            return json_encode( array_merge((array)$newStep, $maps) );
-        } else {
-            if($newStep === NULL) {
-                $newStep = 0;
-            }
-            return json_encode( array( self::NO_UPDATES, $newStep ) ); // No maps banned.
-        }
     }
     
     public function penalty($room) {
