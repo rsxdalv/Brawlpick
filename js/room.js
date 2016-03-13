@@ -56,7 +56,7 @@ function ban(map)
             }
         }
     };
-    xhttp.open("GET", "system/ban.php?token="+token+"&map="+map+"&step="+step, true);
+    xhttp.open("GET", "system/ban.php?token="+token+"&map="+map, true);
     xhttp.send();
     banCooldown = true;
 }
