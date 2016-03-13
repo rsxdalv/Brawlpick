@@ -57,7 +57,7 @@ class Database {
         
         $result = $this->query($duplicateQuery);
         if($result->num_rows > 0) {
-            return json_encode( array(FALSE, $step-1) );
+            return json_encode( array( 'success' => FALSE, 'step' => $step-1));
         }
         $result->close();
 
@@ -67,7 +67,7 @@ class Database {
                 VALUES ("'.($room | $map).'", "'.$room.'", "'.$player.'", "'.$map.'", "'.$step.'");';
 
         $this->query($insertQuery);
-        return json_encode( array(TRUE, $step) );
+        return json_encode( array( 'success' => TRUE, 'step' => $step));
     }
     
     public function getStep($room) {

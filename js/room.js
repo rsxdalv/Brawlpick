@@ -47,16 +47,16 @@ function ban(map)
         {
             banCooldown = false;
             var response = JSON.parse(xhttp.response);
-            if(response[0] === true)
+            if(response.success === true)
             {
                 applyVisualBan(map);
-                step = response[1];
+                step = response.step;
                 update(step);
                 setLoadingAnimation(false);
             }
         }
     };
-    xhttp.open("GET", "system/ban.php?token="+token+"&map="+map, true);
+    xhttp.open("GET", "system/ban.php?token="+token+"&map="+map+"&step="+step, true);
     xhttp.send();
     banCooldown = true;
 }

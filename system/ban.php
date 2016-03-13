@@ -21,26 +21,30 @@ $room = $roomObj->id;
 $map = $mapList[$mapName];
 assert($map !== NULL);
 
-switch($step) {
-    case 0:
-    case 3:
-    case 4:
-        if($player !== Room::USER_PLAYER1) {
-            echo json_encode( array(FALSE, $step));
+try{
+    switch($step) {
+        case 0:
+        case 3:
+        case 4:
+            if($player !== Room::USER_PLAYER1) {
+                echo json_encode( array( 'success' => FALSE, 'step' => $step));
+                exit();
+            }
+            break;
+        case 1:
+        case 2:
+        case 5:
+            if($player !== Room::USER_PLAYER2) {
+                echo json_encode( array( 'success' => FALSE, 'step' => $step));
+                exit();
+            }
+            break;
+        default:
+                echo json_encode( array( 'success' => FALSE, 'step' => $step));
             exit();
-        }
-        break;
-    case 1:
-    case 2:
-    case 5:
-        if($player !== Room::USER_PLAYER2) {
-            echo json_encode( array(FALSE, $step));
-            exit();
-        }
-        break;
-    default:
-        echo json_encode( array(FALSE, $step));
-        exit();
+    }
+} catch (Exception $ex) {
+    echo json_encode( array( 'success' => FALSE, 'step' => $step));
 }
 
 $step++;
