@@ -109,15 +109,12 @@ class Database {
                 usleep(33333); // 30 Checks per second
             }
             $stmt->close();
-            if($newStep > $step)
-            {
+            if($newStep > $step) {
                 $maps = $this->getBans($room);
-                return json_encode( array_merge((array)$newStep, $maps) );
+                return json_encode( array( 'updates' => true, 'step' => $newStep, 'maps' => $maps) );
             } else {
-                if($newStep === NULL) {
-                    $newStep = 0;
-                }
-                return json_encode( array( self::NO_UPDATES, $newStep ) ); // No maps banned.
+                //NB: No longer passing step in response due to improved sync with bans.
+                return json_encode( array( 'updates' => false ) ); // No maps banned.
             }
         } else {
             $this->error($listenQuery);
@@ -128,9 +125,9 @@ class Database {
         $step = $this->getStep($room);
         if($step !== NULL) {
             $maps = $this->getBans($room);
-            return json_encode( array_merge((array)$step, $maps) );
+            return json_encode( array( 'updates' => true, 'step' => $step, 'maps' => $maps) );
         } else {
-            return json_encode( array( self::NO_UPDATES, self::NO_MAPS_BANNED ) ); // No maps banned.
+            return json_encode( array( 'updates' => false ) ); // No maps banned.
         }
     }
     

@@ -11,12 +11,10 @@ include 'Database.class.php';
 include 'Room.class.php';
 include 'maps.php';
 
-
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
 $roomObj = new Room($token);
 $room = $roomObj->id;
 
 $database = new Database();
-
 echo $database->synchronize($room);

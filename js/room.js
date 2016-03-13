@@ -13,6 +13,7 @@ function init() {
     if(player !== 7)
         connect();
     init_countdown();
+    update(0);
 }
 
 /* Communications */
@@ -42,13 +43,14 @@ function ban(map)
     
     setLoadingAnimation(true);
     var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "system/ban.php?token="+token+"&map="+map+"&step="+step, true);
+    xhttp.send();
     xhttp.onreadystatechange = function() {
         if(xhttp.readyState === 4 && xhttp.status === 200)
         {
             banCooldown = false;
             var response = JSON.parse(xhttp.response);
-            if(response.success === true)
-            {
+            if(response.success === true) {
                 applyVisualBan(map);
                 step = response.step;
                 update(step);
@@ -56,8 +58,6 @@ function ban(map)
             }
         }
     };
-    xhttp.open("GET", "system/ban.php?token="+token+"&map="+map+"&step="+step, true);
-    xhttp.send();
     banCooldown = true;
 }
 
@@ -86,22 +86,14 @@ function parseResponse(xhttp)
 {
     if(xhttp.readyState === 4 && xhttp.status === 200) 
     {
-        if(xhttp.response !== 'false')
-        {
-            var maps = JSON.parse(xhttp.response);
-            // Error code for no-updates
-            if(maps[0] === -1) {
-                step = maps[1];
-                update(step);
-                listen();
-            } else {
-                step = maps[0];
-                update(step);
-                for(i = 1; i < maps.length; i++)
-                    applyVisualBan(maps[i]);
-                listen(); // Restart the listening process after processing the message
-            }
+        var response = JSON.parse(xhttp.response);
+        if(response.updates === true) {
+            for(i = 0; i < response.maps.length; i++)
+                applyVisualBan(response.maps[i]);
+            step = response.step;
+            update(step);
         }
+        listen();
     }
 }
 
