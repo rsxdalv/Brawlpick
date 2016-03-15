@@ -41,6 +41,28 @@ class Database {
         }
     }
     
+    public function validate($step, $player) {
+        switch($step) {
+            case 1:
+            case 4:
+            case 5:
+                if($player !== Room::USER_PLAYER1) {
+                    return false;
+                }
+                break;
+            case 2:
+            case 3:
+            case 6:
+                if($player !== Room::USER_PLAYER2) {
+                    return false;
+                }
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+    
     public function ban($room, $player, $map) {
         
         $step = $this->getStep($room);
@@ -48,6 +70,10 @@ class Database {
             $step = 1;
         } else {
             $step++;
+        }
+        
+        if(!$this->validate($step, $player)) {
+            return json_encode( array( 'success' => FALSE, 'step' => $step));
         }
         
         $duplicateQuery =   
