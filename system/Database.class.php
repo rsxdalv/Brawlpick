@@ -148,12 +148,15 @@ class Database {
     }
     
     public function synchronize($room) {
+//        if(!$this->meet($room, Room::USER_CONNECTED_CODE)) {
+//            return json_encode( array( 'connected' => false ) );
+//        }
         $step = $this->getStep($room);
         if($step !== NULL) {
             $maps = $this->getBans($room);
-            return json_encode( array( 'updates' => true, 'step' => intval($step), 'maps' => $maps) );
+            return json_encode( array( 'connected' => true, 'updates' => true, 'step' => intval($step), 'maps' => $maps) );
         } else {
-            return json_encode( array( 'updates' => false ) ); // No maps banned.
+            return json_encode( array( 'connected' => true, 'updates' => false ) ); // No maps banned.
         }
     }
     
@@ -205,6 +208,9 @@ class Database {
             }
             $stmt->close();
             if($timestamp) {
+                if($player === Room::USER_PLAYER2) {
+                    $this->checkIn($room, Room::USER_CONNECTED_CODE);
+                }
                 return true;
             } else {
                 return false;
@@ -232,6 +238,8 @@ class Database {
         $stmt->bind_result($newStep);
         $time = self::BAN_TIMEOUT;
         while($step < 6) {
+            echo 'Step: '.$step.PHP_EOL;
+            echo 'NewStep: '.$newStep.PHP_EOL;
             usleep($time);
             $stmt->execute();
             $stmt->fetch();

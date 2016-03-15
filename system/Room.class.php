@@ -13,6 +13,7 @@
  */
 class Room {
     const USER_SPECTATOR = 7;
+    const USER_CONNECTED_CODE = 6; // USER_ prefix denotes data storage location
     const USER_PLAYER1 = 0;
     const USER_PLAYER2 = 1;
     

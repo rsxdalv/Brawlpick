@@ -39,9 +39,7 @@ if(!$database->meet($room, $player2) ) {
     exit;
 }
 
-if($player === Room::USER_PLAYER1 ) {
-    if(! $database->timeout($room) ) {
-       echo json_encode( false );
-    }
+if($player === Room::USER_PLAYER1) {
+    $database->timeout($room);
 }
     
