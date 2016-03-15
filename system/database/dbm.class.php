@@ -15,6 +15,7 @@ class dbm {
     const DELETE = 0;
     const CLEAR = 1;
     const CREATE = 2;
+    const IMPROVE_BANS = 6;
     const CREATE_ROOMS = 3;
     const DELETE_ROOMS = 4;
     const CLEAR_ROOMS = 5;
@@ -59,6 +60,9 @@ class dbm {
                         `step` int(11) NOT NULL,
                         PRIMARY KEY (`id`)
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8';
+                break;
+            case self::IMPROVE_BANS :
+                $query = 'ALTER TABLE `ban_list` ADD `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `step`;';
                 break;
             case self::DELETE_ROOMS :
                 $query = 'DROP TABLE `rooms`;'; 

@@ -40,6 +40,7 @@ and open the template in the editor.
                 <input type="radio" name="action" value="clear" />Clear bans<br />
                 <input type="radio" name="action" value="create" />Create bans<br />
                 <input type="radio" name="action" value="delete" />Delete bans<br />
+                <input type="radio" name="action" value="improve_bans" />Improve bans<br />
                 <input type="radio" name="action" value="clear_rooms" />Clear rooms<br />
                 <input type="radio" name="action" value="create_rooms" />Create rooms<br />
                 <input type="radio" name="action" value="delete_rooms" />Delete rooms<br />
@@ -63,6 +64,9 @@ and open the template in the editor.
                     break;
                 case 'delete':
                     $dbm->perform(dbm::DELETE);
+                    break;
+                case 'improve_bans':
+                    $dbm->perform(dbm::IMPROVE_BANS);
                     break;
                 case 'clear_rooms':
                     $dbm->perform(dbm::CLEAR_ROOMS);

@@ -14,6 +14,7 @@ class Database {
     const BAN_TIMEOUT = 15000000;
     const NO_MAPS_BANNED = 0;
     const NO_UPDATES = -1;
+    const USER_BOT = 6;
 
     private $db;
     
@@ -42,6 +43,12 @@ class Database {
     }
     
     public function validate($step, $player) {
+        if($step > 6) {
+            return false;
+        }
+        if($player === self::USER_BOT) {
+            return true;
+        }
         switch($step) {
             case 1:
             case 4:
@@ -148,9 +155,9 @@ class Database {
     }
     
     public function synchronize($room) {
-//        if(!$this->meet($room, Room::USER_CONNECTED_CODE)) {
-//            return json_encode( array( 'connected' => false ) );
-//        }
+        if(!$this->meet($room, Room::USER_CONNECTED_CODE)) {
+            return json_encode( array( 'connected' => false ) );
+        }
         $step = $this->getStep($room);
         if($step !== NULL) {
             $maps = $this->getBans($room);
@@ -245,8 +252,20 @@ class Database {
             $stmt->fetch();
             if($newStep > $step) {
                 $step = $newStep;
-                $time = self::BAN_TIMEOUT - 0;//$this->getTimeStamp($room);
                 $stmt->free_result();
+                $timeQuery = 
+                        'SELECT TIMESTAMPDIFF(  MICROSECOND,
+                            NOW(),
+                            TIMESTAMPADD( SECOND, 15, `time` )  )
+                        FROM `ban_list` 
+                        WHERE `room` = '.$room.'
+                        AND `step` = '.$step.';';
+                
+                $timeResult = $this->query($timeQuery);
+                if($timeResult->num_rows > 0) {
+                    $time = $timeResult->fetch_array()[0];
+                }
+                $timeResult->free();
             } else {
                 $step++;
                 $time = self::BAN_TIMEOUT;
@@ -278,7 +297,7 @@ class Database {
         } else {
             $selection = mt_rand(1, 7);
         }
-        $this->ban($room, 7, $selection);
+        $this->ban($room, self::USER_BOT, $selection);
     }
     
     private function query($query) {

@@ -32,8 +32,8 @@ and open the template in the editor.
         <div id="overlay"></div>
         <div id="info">
             <span id="player"> <?php if ($player === 7) { echo "You are a spectator"; } else { echo "You are player ".($player+1); } ?> </span>
-            <span id="message">loading...</span>
-            <span id="timer">15.0</span>
+            <span id="message">Waiting for players... </span>
+            <span id="timer">60.0</span>
         </div>
         <div id="bantool">
             <div class="map" id="keep" onclick="ban('keep')">Blackguard Keep</div>

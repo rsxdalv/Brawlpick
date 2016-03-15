@@ -13,7 +13,6 @@ function init() {
     if(player !== 7)
         connect();
     init_countdown();
-    update(0);
 }
 
 /* Communications */
@@ -78,7 +77,6 @@ function synchronize()
     xhttp.send();
     xhttp.onreadystatechange = function() {
         parseResponse(xhttp);
-        setLoadingAnimation(false);
     };
 }
 
@@ -87,6 +85,10 @@ function parseResponse(xhttp)
     if(xhttp.readyState === 4 && xhttp.status === 200) 
     {
         var response = JSON.parse(xhttp.response);
+        if(response.connected === true) {
+            update(step);
+            setLoadingAnimation(false);
+        }
         if(response.updates === true) {
             for(i = 0; i < response.maps.length; i++)
                 applyVisualBan(response.maps[i]);
@@ -127,19 +129,6 @@ function update(step) {
         else {
             displayMessage('Player '+(player2+1)+"'s turn [" + (step+1) + '/6]');
         }
-        
-//        switch(player) {
-//            case 0:
-//                displayMessage(player1[step] + ' ' + (step+1) + ' of 6');
-//                break;
-//            case 1:
-//                displayMessage(player2[step] + ' ' + (step+1) + ' of 6');
-//                break;
-//            default:
-//                displayMessage(specator[step] + ' ' + (step+1) + ' of 6');
-//                break;
-//        }
-
     }
 }
 
@@ -152,8 +141,7 @@ function setLoadingAnimation(state) {
     if(state) {
         document.getElementById("overlay").style.display = "block";
         displayMessage("loading...");
-    }
-    else
+    } else
         document.getElementById("overlay").style.display = "none";
 }
 
@@ -166,7 +154,8 @@ function countdown() {
 }
 
 function init_countdown() {
-    resetCountdown();
+    var d = new Date();
+    timer = d.getTime() + 60000;
     timerHandle = setInterval(countdown, 100);
 }
 
