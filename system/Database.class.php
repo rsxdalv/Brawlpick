@@ -252,8 +252,6 @@ class Database {
                 exit;
             }
             $newStep = $stmt->get_result()->fetch_array()[0];
-            echo 'Step: '.$step.PHP_EOL;
-            echo 'NewStep: '.$newStep.PHP_EOL;
             if($newStep > $step) {
                 $step = $newStep;
                 $stmt->free_result();
