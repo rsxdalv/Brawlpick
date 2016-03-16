@@ -11,7 +11,7 @@
  * @author rober
  */
 class Database {
-    const BAN_TIMEOUT = 15000000;
+    const BAN_TIMEOUT = 30000000;
     const NO_MAPS_BANNED = 0;
     const NO_UPDATES = -1;
     const USER_BOT = 6;

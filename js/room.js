@@ -161,7 +161,7 @@ function init_countdown() {
 
 function resetCountdown() {
     var d = new Date();
-    timer = d.getTime() + 15500;
+    timer = d.getTime() + 30500;
 }
 
 function applyVisualBan(map) {
