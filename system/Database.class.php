@@ -245,11 +245,15 @@ class Database {
         $stmt->bind_result($newStep);
         $time = self::BAN_TIMEOUT;
         while($step < 6) {
+            usleep($time);
+            if(!$stmt->execute()) {
+                echo "STMT query error. #".$stmt->errno.": ".$stmt->error.PHP_EOL;
+                echo "Query: ".$listenQuery.PHP_EOL;
+                exit;
+            }
+            $newStep = $stmt->get_result()->fetch_array()[0];
             echo 'Step: '.$step.PHP_EOL;
             echo 'NewStep: '.$newStep.PHP_EOL;
-            usleep($time);
-            $stmt->execute();
-            $stmt->fetch();
             if($newStep > $step) {
                 $step = $newStep;
                 $stmt->free_result();
