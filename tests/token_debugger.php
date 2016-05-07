@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-include 'Room.class.php';
+include '../system/Room.class.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
