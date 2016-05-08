@@ -13,9 +13,9 @@ include 'Room.class.php';
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
 
-$roomObj = new Room($token);
-$room = $roomObj->id;
-$player = $roomObj->player;
+$Room = new Room($token);
+$roomID = $Room->id;
+$player = $Room->player;
 $player2 = 0;
 switch($player) {
     case Room::USER_SPECTATOR :
@@ -29,17 +29,17 @@ switch($player) {
 }
 
 $database = new Database();
-if(!$database->checkIn($room, $player) ) {
+if(!$database->checkIn($roomID, $player) ) {
     echo json_encode ( false );
     exit;
 }
 
-if(!$database->meet($room, $player2) ) {
+if(!$database->meet($roomID, $player2) ) {
     echo json_encode( false );
     exit;
 }
 
 if($player === Room::USER_PLAYER1) {
-    $database->timeout($room);
+    $database->timeout($roomID);
 }
     

@@ -13,8 +13,8 @@ include 'maps.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
-$roomObj = new Room($token);
-$room = $roomObj->id;
+$Room = new Room($token);
+$roomID = $Room->id;
 
 $database = new Database();
-echo $database->synchronize($room);
+echo $database->synchronize($roomID);

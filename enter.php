@@ -17,11 +17,11 @@ and open the template in the editor.
     <body>
         <?php
         include 'system/Room.class.php';
-        $roomObj = new Room();
-        $room = $roomObj->id;
-        $token1 = $roomObj->getToken(Room::USER_PLAYER1);
-        $token2 = $roomObj->getToken(Room::USER_PLAYER2);
-        $token3 = $roomObj->getToken(Room::USER_SPECTATOR);
+        $Room = new Room();
+        $roomID = $Room->id;
+        $token1 = $Room->getToken(Room::USER_PLAYER1);
+        $token2 = $Room->getToken(Room::USER_PLAYER2);
+        $token3 = $Room->getToken(Room::USER_SPECTATOR);
         $server_name = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_URL);
         $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_NUMBER_INT);
         if($server_name === 'localhost') {

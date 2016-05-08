@@ -10,12 +10,12 @@ include '../system/Room.class.php';
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
 if(!isset($token)) {
-    $roomObj = new Room();
-    $token = $roomObj->getToken(Room::USER_PLAYER1);
+    $Room = new Room();
+    $token = $Room->getToken(Room::USER_PLAYER1);
 } else {
-    $roomObj = new Room($token);
+    $Room = new Room($token);
 }
 
-echo "Token: '".$roomObj->token."' <br />";
-echo "Room: '".$roomObj->id."' <br />";
-echo "Player: '".$roomObj->player."' <br />";
+echo "Token: '".$Room->token."' <br />";
+echo "Room: '".$Room->id."' <br />";
+echo "Player: '".$Room->player."' <br />";

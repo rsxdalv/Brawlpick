@@ -14,8 +14,8 @@ and open the template in the editor.
                 <?php 
                 include 'system/Room.class.php';
                 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
-                $roomObj = new Room($token);
-                $player = $roomObj->player;
+                $Room = new Room($token);
+                $player = $Room->player;
                 ?>
                 /* globals */
                 var token = encodeURIComponent(<?php echo json_encode($token); ?>);

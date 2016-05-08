@@ -15,9 +15,9 @@ $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
 $mapName = filter_input(INPUT_GET, 'map', FILTER_SANITIZE_STRING);
 
-$roomObj = new Room($token);
-$player = $roomObj->player;
-$room = $roomObj->id;
+$Room = new Room($token);
+$player = $Room->player;
+$roomID = $Room->id;
 $map = $mapList[$mapName];
 assert($map !== NULL);
 
@@ -48,4 +48,4 @@ try{
 $step++;
 
 $database = new Database();
-echo $database->ban($room, $player, $map);
+echo $database->ban($roomID, $player, $map);

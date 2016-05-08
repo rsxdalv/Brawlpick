@@ -14,8 +14,8 @@ include 'maps.php';
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
 
-$roomObj = new Room($token);
-$room = $roomObj->id;
+$Room = new Room($token);
+$roomID = $Room->id;
 
 $database = new Database();
-echo $database->listen($room, $step);
+echo $database->listen($roomID, $step);
