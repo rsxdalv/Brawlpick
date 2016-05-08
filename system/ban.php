@@ -45,7 +45,5 @@ try{
     exit;
 }
 
-$step++;
-
 $database = new Database();
 echo $database->ban($roomID, $player, $map);
