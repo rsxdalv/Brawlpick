@@ -121,16 +121,17 @@ function synchronize()
 
 function connect()
 {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            if (JSON.parse(xhttp.response) !== true) {
-                alert("Error connecting!");
-            }
-        }
-    };
-    xhttp.open("GET", "system/connect.php?token=" + token, true);
-    xhttp.send();
+    $.ajax({
+        url: 'system/connect.php',
+        data: {
+            token: token
+        },
+        type: 'GET',
+        dataType: 'json'
+    }).done(function (data) {
+        if(data !== true)
+            alert("Error connecting!");
+    });
 }
 
 function parseResponse(xhttp)
