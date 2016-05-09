@@ -24,8 +24,10 @@ function updateUI(response) {
         setLoadingAnimation(false);
     }
     if (response.updates === true) {
-        for (i = 0; i < response.maps.length; i++)
-            applyVisualBan(response.maps[i]);
+        foreach (response.maps as map)
+            showBan(map)
+        // for (i = 0; i < response.maps.length; i++)
+        //     showBan(response.maps[i]);
         step = response.step;
         setStep(step);
     }
@@ -39,12 +41,10 @@ function getCurrentPlayer() {
         case 3:
         case 4:
             return 0;
-            break;
         case 1:
         case 2:
         case 5:
             return 1;
-            break;
         default:
             return 7;
     }
@@ -69,7 +69,7 @@ function ban(map)
     }).done(function (response) {
         banRequested = false;
         if (response.success === true) {
-            applyVisualBan(map);
+            showBan(map);
             step = response.step;
             setStep(step);
             setLoadingAnimation(false);
@@ -122,7 +122,7 @@ function setStep(step) {
     if (step === 6) {
         displayMessage("Bans Finished!");
         clearTimeout(timerHandle);
-        $('#timer').text('0.0');
+        $('#timer').text('0');
     } else {
         var player2 = getCurrentPlayer();
         if (player2 === player) {
@@ -181,10 +181,10 @@ function cd_reset() {
     timeRemaining = new Date().getTime() + 30500;
 }
 
-function applyVisualBan(map) {
+function showBan(map) {
     $('#' + map).addClass('banned').off();
 }
 
-function removeVisualBan(map) {
+function hideBan(map) {
     $('#' + map).removeClass('banned').click(ban(map));
 }
