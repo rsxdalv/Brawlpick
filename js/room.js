@@ -6,8 +6,8 @@
 
 /* globals */
 var player, token; // externally assigned globals
-var step = 0, banCooldown = false;
-var timer, timerHandle;
+var step = 0, banRequested = false;
+var timeRemaining, timerHandle;
 
 function init() {
     synchronize();
@@ -52,7 +52,7 @@ function getCurrentPlayer() {
 
 function ban(map)
 {
-    if (banCooldown || getCurrentPlayer() !== player)
+    if (banRequested || getCurrentPlayer() !== player)
         return;
 
     setLoadingAnimation(true);
@@ -66,21 +66,19 @@ function ban(map)
         },
         type: 'GET',
         dataType: 'json'
-    })
-            .done(function (response) {
-                banCooldown = false;
-                if (response.success === true) {
-                    applyVisualBan(map);
-                    step = response.step;
-                    setStep(step);
-                    setLoadingAnimation(false);
-                }
-            });
-    banCooldown = true;
+    }).done(function (response) {
+        banRequested = false;
+        if (response.success === true) {
+            applyVisualBan(map);
+            step = response.step;
+            setStep(step);
+            setLoadingAnimation(false);
+        }
+    });
+    banRequested = true;
 }
 
-function listen()
-{
+function listen() {
     $.ajax({
         url: 'system/listen.php',
         data: {
@@ -92,8 +90,7 @@ function listen()
     }).done(updateUI);
 }
 
-function synchronize()
-{
+function synchronize() {
     $.ajax({
         url: 'system/synchronize.php',
         data: {
@@ -104,8 +101,7 @@ function synchronize()
     }).done(updateUI);
 }
 
-function connect()
-{
+function connect() {
     $.ajax({
         url: 'system/connect.php',
         data: {
@@ -172,17 +168,17 @@ function setLoadingAnimation(state) {
 
 function cd_tick() {
     document.getElementById('timer').innerHTML = (
-                    Math.floor(
-                            (timer - new Date().getTime()) / 1000));
+            Math.floor(
+                    (timeRemaining - new Date().getTime()) / 1000));
 }
 
 function cd_init() {
-    timer = new Date().getTime() + 60000;
+    timeRemaining = new Date().getTime() + 60000;
     timerHandle = setInterval(cd_tick, 500);
 }
 
 function cd_reset() {
-    timer = new Date().getTime() + 30500;
+    timeRemaining = new Date().getTime() + 30500;
 }
 
 function applyVisualBan(map) {
