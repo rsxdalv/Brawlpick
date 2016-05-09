@@ -66,12 +66,33 @@ function ban(map)
 
 function listen()
 {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "system/listen.php?token=" + token + "&step=" + step, true);
-    xhttp.send();
-    xhttp.onreadystatechange = function () {
-        parseResponse(xhttp);
-    };
+    $.ajax({
+        url: 'system/listen.php',
+        data: {
+            token: token,
+            step: step
+        },
+        type: 'GET',
+        dataType: 'json'
+    }).done( function (response) {
+        if (response.connected === true) {
+            update(step);
+            setLoadingAnimation(false);
+        }
+        if (response.updates === true) {
+            for (i = 0; i < response.maps.length; i++)
+                applyVisualBan(response.maps[i]);
+            step = response.step;
+            update(step);
+        }
+        listen();
+    })
+//    var xhttp = new XMLHttpRequest();
+//    xhttp.open("GET", "system/listen.php?token=" + token + "&step=" + step, true);
+//    xhttp.send();
+//    xhttp.onreadystatechange = function () {
+//        parseResponse(xhttp);
+//    };
 }
 
 function synchronize()
