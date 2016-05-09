@@ -10,6 +10,7 @@ and open the template in the editor.
             <link rel="stylesheet" type="text/css" href="css/room.css" />
             <link rel="icon" href="img/icon.ico" />
             <meta charset="UTF-8">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
             <script type="text/javascript">  
                 <?php 
                 include 'system/Room.class.php';
