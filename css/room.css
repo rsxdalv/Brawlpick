@@ -60,6 +60,7 @@ body {
     text-decoration: line-through;
     font-style: italic;
     color: #000;
+    background-image: url(../img/maps_banned.jpg);
 }
 
 /* Icon section */
