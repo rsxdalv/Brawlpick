@@ -41,22 +41,26 @@ function ban(map)
         return;
 
     setLoadingAnimation(true);
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "system/ban.php?token=" + token + "&map=" + map + "&step=" + step, true);
-    xhttp.send();
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4 && xhttp.status === 200)
-        {
-            banCooldown = false;
-            var response = JSON.parse(xhttp.response);
-            if (response.success === true) {
-                applyVisualBan(map);
-                step = response.step;
-                update(step);
-                setLoadingAnimation(false);
-            }
+
+    $.ajax({
+        url: 'system/ban.php',
+        data: {
+            token: token,
+            map: map,
+            step: step
+        },
+        type: 'GET',
+        dataType: 'json'
+    })
+    .done(function (response) {
+        banCooldown = false;
+        if (response.success === true) {
+            applyVisualBan(map);
+            step = response.step;
+            update(step);
+            setLoadingAnimation(false);
         }
-    };
+    });
     banCooldown = true;
 }
 
@@ -80,6 +84,20 @@ function synchronize()
     };
 }
 
+function connect()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            if (JSON.parse(xhttp.response) !== true) {
+                alert("Error connecting!");
+            }
+        }
+    };
+    xhttp.open("GET", "system/connect.php?token=" + token, true);
+    xhttp.send();
+}
+
 function parseResponse(xhttp)
 {
     if (xhttp.readyState === 4 && xhttp.status === 200)
@@ -99,19 +117,6 @@ function parseResponse(xhttp)
     }
 }
 
-function connect()
-{
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            if (JSON.parse(xhttp.response) !== true) {
-                alert("Error connecting!");
-            }
-        }
-    };
-    xhttp.open("GET", "system/connect.php?token=" + token, true);
-    xhttp.send();
-}
 
 /* Visuals */
 
@@ -164,9 +169,9 @@ function resetCountdown() {
 }
 
 function applyVisualBan(map) {
-    $('#'+map).addClass('banned').off();
+    $('#' + map).addClass('banned').off();
 }
 
 function removeVisualBan(map) {
-    $('#'+map).removeClass('banned').click(function () {ban(map)});
+    $('#' + map).removeClass('banned').click(ban(map));
 }
