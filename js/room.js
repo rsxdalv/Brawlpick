@@ -6,18 +6,19 @@
 
 /* globals */
 var player, token; // externally assigned globals
-var step = 0, banCooldown = false, timer, timerHandle;
+var step = 0, banCooldown = false;
+var timer, timerHandle;
 
 function init() {
     synchronize();
     if (player !== 7)
         connect();
-    init_countdown();
+    cd_init();
 }
 
 /* Communications */
 
-function updateUI (response) {
+function updateUI(response) {
     if (response.connected === true) {
         setStep(step);
         setLoadingAnimation(false);
@@ -66,15 +67,15 @@ function ban(map)
         type: 'GET',
         dataType: 'json'
     })
-    .done(function (response) {
-        banCooldown = false;
-        if (response.success === true) {
-            applyVisualBan(map);
-            step = response.step;
-            setStep(step);
-            setLoadingAnimation(false);
-        }
-    });
+            .done(function (response) {
+                banCooldown = false;
+                if (response.success === true) {
+                    applyVisualBan(map);
+                    step = response.step;
+                    setStep(step);
+                    setLoadingAnimation(false);
+                }
+            });
     banCooldown = true;
 }
 
@@ -88,7 +89,7 @@ function listen()
         },
         type: 'GET',
         dataType: 'json'
-    }).done( updateUI );
+    }).done(updateUI);
 }
 
 function synchronize()
@@ -100,7 +101,7 @@ function synchronize()
         },
         type: 'GET',
         dataType: 'json'
-    }).done( updateUI );
+    }).done(updateUI);
 }
 
 function connect()
@@ -113,7 +114,7 @@ function connect()
         type: 'GET',
         dataType: 'json'
     }).done(function (data) {
-        if(data !== true)
+        if (data !== true)
             alert("Error connecting!");
     });
 }
@@ -121,7 +122,7 @@ function connect()
 /* Visuals */
 
 function setStep(step) {
-    resetCountdown();
+    cd_reset();
     if (step === 6) {
         displayMessage("Bans Finished!");
         clearTimeout(timerHandle);
@@ -149,23 +150,39 @@ function setLoadingAnimation(state) {
         $('#overlay').hide();
 }
 
-function countdown() {
-    var d = new Date();
-    var t = timer - d.getTime();
-    var s = Math.floor(t / 1000);
-    var s10 = Math.floor(t / 100) % 10;
-    $('#timer').text(s + '.' + s10);
+// Draft for potential future adaptation
+//function timerFactory() {
+//    return {
+//        timer: null,
+//        handle: null,
+//        init: function () {
+//            timer = new Date().getTime() + 60000;
+//            timerHandle = setInterval(this.tick, 500);
+//        },
+//        tick: function () {
+//            document.getElementById('timer').innerHTML.text(
+//                    Math.floor(
+//                            (timer - new Date().getTime()) / 1000));
+//        },
+//        reset: function () {
+//            timer = new Date().getTime() + 30500;
+//        }
+//    };
+//}
+
+function cd_tick() {
+    document.getElementById('timer').innerHTML = (
+                    Math.floor(
+                            (timer - new Date().getTime()) / 1000));
 }
 
-function init_countdown() {
-    var d = new Date();
-    timer = d.getTime() + 60000;
-    timerHandle = setInterval(countdown, 100);
+function cd_init() {
+    timer = new Date().getTime() + 60000;
+    timerHandle = setInterval(cd_tick, 500);
 }
 
-function resetCountdown() {
-    var d = new Date();
-    timer = d.getTime() + 30500;
+function cd_reset() {
+    timer = new Date().getTime() + 30500;
 }
 
 function applyVisualBan(map) {
