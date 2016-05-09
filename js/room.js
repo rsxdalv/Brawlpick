@@ -24,10 +24,7 @@ function updateUI(response) {
         setLoadingAnimation(false);
     }
     if (response.updates === true) {
-        foreach (response.maps as map)
-            showBan(map)
-        // for (i = 0; i < response.maps.length; i++)
-        //     showBan(response.maps[i]);
+        response.maps.forEach(showBan);
         step = response.step;
         setStep(step);
     }
