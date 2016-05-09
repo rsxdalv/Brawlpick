@@ -17,6 +17,20 @@ function init() {
 
 /* Communications */
 
+function updateUI (response) {
+    if (response.connected === true) {
+        setStep(step);
+        setLoadingAnimation(false);
+    }
+    if (response.updates === true) {
+        for (i = 0; i < response.maps.length; i++)
+            applyVisualBan(response.maps[i]);
+        step = response.step;
+        setStep(step);
+    }
+    listen();
+}
+
 // True if player has the right to execute step
 function getCurrentPlayer() {
     switch (step) {
@@ -57,7 +71,7 @@ function ban(map)
         if (response.success === true) {
             applyVisualBan(map);
             step = response.step;
-            update(step);
+            setStep(step);
             setLoadingAnimation(false);
         }
     });
@@ -74,25 +88,7 @@ function listen()
         },
         type: 'GET',
         dataType: 'json'
-    }).done( function (response) {
-        if (response.connected === true) {
-            update(step);
-            setLoadingAnimation(false);
-        }
-        if (response.updates === true) {
-            for (i = 0; i < response.maps.length; i++)
-                applyVisualBan(response.maps[i]);
-            step = response.step;
-            update(step);
-        }
-        listen();
-    });
-//    var xhttp = new XMLHttpRequest();
-//    xhttp.open("GET", "system/listen.php?token=" + token + "&step=" + step, true);
-//    xhttp.send();
-//    xhttp.onreadystatechange = function () {
-//        parseResponse(xhttp);
-//    };
+    }).done( updateUI );
 }
 
 function synchronize()
@@ -104,19 +100,7 @@ function synchronize()
         },
         type: 'GET',
         dataType: 'json'
-    }).done( function (response) {
-        if (response.connected === true) {
-            update(step);
-            setLoadingAnimation(false);
-        }
-        if (response.updates === true) {
-            for (i = 0; i < response.maps.length; i++)
-                applyVisualBan(response.maps[i]);
-            step = response.step;
-            update(step);
-        }
-        listen();
-    });
+    }).done( updateUI );
 }
 
 function connect()
@@ -134,29 +118,9 @@ function connect()
     });
 }
 
-function parseResponse(xhttp)
-{
-    if (xhttp.readyState === 4 && xhttp.status === 200)
-    {
-        var response = JSON.parse(xhttp.response);
-        if (response.connected === true) {
-            update(step);
-            setLoadingAnimation(false);
-        }
-        if (response.updates === true) {
-            for (i = 0; i < response.maps.length; i++)
-                applyVisualBan(response.maps[i]);
-            step = response.step;
-            update(step);
-        }
-        listen();
-    }
-}
-
-
 /* Visuals */
 
-function update(step) {
+function setStep(step) {
     resetCountdown();
     if (step === 6) {
         displayMessage("Bans Finished!");
