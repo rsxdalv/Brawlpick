@@ -10,7 +10,7 @@ var step = 0, banCooldown = false, timer, timerHandle;
 
 function init() {
     synchronize();
-    if(player !== 7)
+    if (player !== 7)
         connect();
     init_countdown();
 }
@@ -19,7 +19,7 @@ function init() {
 
 // True if player has the right to execute step
 function getCurrentPlayer() {
-    switch(step) {
+    switch (step) {
         case 0:
         case 3:
         case 4:
@@ -37,19 +37,19 @@ function getCurrentPlayer() {
 
 function ban(map)
 {
-    if(banCooldown || getCurrentPlayer() !== player)
+    if (banCooldown || getCurrentPlayer() !== player)
         return;
-    
+
     setLoadingAnimation(true);
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "system/ban.php?token="+token+"&map="+map+"&step="+step, true);
+    xhttp.open("GET", "system/ban.php?token=" + token + "&map=" + map + "&step=" + step, true);
     xhttp.send();
-    xhttp.onreadystatechange = function() {
-        if(xhttp.readyState === 4 && xhttp.status === 200)
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200)
         {
             banCooldown = false;
             var response = JSON.parse(xhttp.response);
-            if(response.success === true) {
+            if (response.success === true) {
                 applyVisualBan(map);
                 step = response.step;
                 update(step);
@@ -63,9 +63,9 @@ function ban(map)
 function listen()
 {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "system/listen.php?token="+token+"&step="+step, true);
+    xhttp.open("GET", "system/listen.php?token=" + token + "&step=" + step, true);
     xhttp.send();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
         parseResponse(xhttp);
     };
 }
@@ -73,24 +73,24 @@ function listen()
 function synchronize()
 {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "system/synchronize.php?token="+token, true);
+    xhttp.open("GET", "system/synchronize.php?token=" + token, true);
     xhttp.send();
-    xhttp.onreadystatechange = function() {
+    xhttp.onreadystatechange = function () {
         parseResponse(xhttp);
     };
 }
 
-function parseResponse(xhttp) 
+function parseResponse(xhttp)
 {
-    if(xhttp.readyState === 4 && xhttp.status === 200) 
+    if (xhttp.readyState === 4 && xhttp.status === 200)
     {
         var response = JSON.parse(xhttp.response);
-        if(response.connected === true) {
+        if (response.connected === true) {
             update(step);
             setLoadingAnimation(false);
         }
-        if(response.updates === true) {
-            for(i = 0; i < response.maps.length; i++)
+        if (response.updates === true) {
+            for (i = 0; i < response.maps.length; i++)
                 applyVisualBan(response.maps[i]);
             step = response.step;
             update(step);
@@ -102,14 +102,14 @@ function parseResponse(xhttp)
 function connect()
 {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if(xhttp.readyState === 4 && xhttp.status === 200) {
-            if(JSON.parse(xhttp.response) !== true) {
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            if (JSON.parse(xhttp.response) !== true) {
                 alert("Error connecting!");
             }
         }
     };
-    xhttp.open("GET", "system/connect.php?token="+token, true);
+    xhttp.open("GET", "system/connect.php?token=" + token, true);
     xhttp.send();
 }
 
@@ -117,40 +117,39 @@ function connect()
 
 function update(step) {
     resetCountdown();
-    if(step === 6) {
+    if (step === 6) {
         displayMessage("Bans Finished!");
         clearTimeout(timerHandle);
-        document.getElementById("timer").innerHTML = "0.0";
+        $('#timer').text('0.0');
     } else {
         var player2 = getCurrentPlayer();
-        if(player2 === player) {
-            displayMessage('Your turn [' + (step+1) + '/6]');
-        }
-        else {
-            displayMessage('Player '+(player2+1)+"'s turn [" + (step+1) + '/6]');
+        if (player2 === player) {
+            displayMessage('Your turn [' + (step + 1) + '/6]');
+        } else {
+            displayMessage('Player ' + (player2 + 1) + "'s turn [" + (step + 1) + '/6]');
         }
     }
 }
 
 /* Display */
 function displayMessage(message) {
-    document.getElementById("message").innerHTML = message;
+    $('#message').text(message);
 }
 
 function setLoadingAnimation(state) {
-    if(state) {
-        document.getElementById("overlay").style.display = "block";
+    if (state) {
+        $('#overlay').show();
         displayMessage("loading...");
     } else
-        document.getElementById("overlay").style.display = "none";
+        $('#overlay').hide();
 }
 
 function countdown() {
     var d = new Date();
     var t = timer - d.getTime();
-    var s = Math.floor( t/1000 );
-    var s10 = Math.floor( t/100 ) % 10;
-    document.getElementById("timer").innerHTML = s + "." + s10;
+    var s = Math.floor(t / 1000);
+    var s10 = Math.floor(t / 100) % 10;
+    $('#timer').text(s + '.' + s10);
 }
 
 function init_countdown() {
@@ -165,15 +164,9 @@ function resetCountdown() {
 }
 
 function applyVisualBan(map) {
-    var mapElement = document.getElementById(map);
-    mapElement.className = "map banned";
-    mapElement.style.backgroundImage = "url('img/maps_banned.jpg')";
-    mapElement.setAttribute('onclick', '');
+    $('#'+map).addClass('banned').off();
 }
 
 function removeVisualBan(map) {
-    var mapElement = document.getElementById(map);
-    mapElement.className = "map";
-    mapElement.style.backgroundImage = "url('img/maps.jpg')";
-    mapElement.setAttribute('onclick', 'ban('+map+')');
+    $('#'+map).removeClass('banned').click(function () {ban(map)});
 }
