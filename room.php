@@ -19,7 +19,7 @@ and open the template in the editor.
                 $player = $Room->player;
                 ?>
                 /* globals */
-                var token = encodeURIComponent(<?php echo json_encode($token); ?>);
+                var token = <?php echo json_encode($token); ?>;
                 var player = <?php echo json_encode($player); ?>;
             </script>
             <script type="text/javascript" src="js/room.js"></script>
