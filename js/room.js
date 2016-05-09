@@ -86,7 +86,7 @@ function listen()
             update(step);
         }
         listen();
-    })
+    });
 //    var xhttp = new XMLHttpRequest();
 //    xhttp.open("GET", "system/listen.php?token=" + token + "&step=" + step, true);
 //    xhttp.send();
@@ -97,12 +97,26 @@ function listen()
 
 function synchronize()
 {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "system/synchronize.php?token=" + token, true);
-    xhttp.send();
-    xhttp.onreadystatechange = function () {
-        parseResponse(xhttp);
-    };
+    $.ajax({
+        url: 'system/synchronize.php',
+        data: {
+            token: token
+        },
+        type: 'GET',
+        dataType: 'json'
+    }).done( function (response) {
+        if (response.connected === true) {
+            update(step);
+            setLoadingAnimation(false);
+        }
+        if (response.updates === true) {
+            for (i = 0; i < response.maps.length; i++)
+                applyVisualBan(response.maps[i]);
+            step = response.step;
+            update(step);
+        }
+        listen();
+    });
 }
 
 function connect()
