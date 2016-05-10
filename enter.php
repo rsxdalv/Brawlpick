@@ -11,7 +11,7 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Ban tool form</title>
+        <title>Draft Pick Mode</title>
         <link rel="stylesheet" type="text/css" href="css/entrance.css" />
     </head>
     <body>
