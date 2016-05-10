@@ -10,24 +10,6 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="css/room.css" />
         <link rel="icon" href="img/icon.ico" />
         <meta charset="UTF-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-        <script type="text/javascript">
-<?php
-include 'system/Room.class.php';
-$token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
-$Room = new Room($token);
-$player = $Room->player;
-?>
-            /* globals */
-            var token = <?php echo json_encode($token); ?>;
-            var player = <?php echo json_encode($player); ?>;
-        </script>
-        <script type="text/javascript" src="js/room.js"></script>
-        <script type="text/javascript" src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
-        <script type="text/javascript">
-            var queue = new createjs.LoadQueue(true);
-            queue.loadFile("img/maps_banned.jpg");
-        </script>
     </head>
     <body id="body" onload='init()'>
         <div id="overlay"></div>
@@ -53,6 +35,24 @@ $player = $Room->player;
             <div class="map" id="stadium" onclick="ban('stadium')">Thundergard Stadium</div>
             <div class="map" id="grove" onclick="ban('grove')">Twilight Grove</div>
             <br />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script type="text/javascript">
+<?php
+include 'system/Room.class.php';
+$token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
+$Room = new Room($token);
+$player = $Room->player;
+?>
+            /* globals */
+            var auth = <?php echo json_encode($token); ?>;
+            var player = <?php echo json_encode($player); ?>;
+        </script>
+        <script type="text/javascript" src="js/room.js"></script>
+        <script type="text/javascript" src="https://code.createjs.com/preloadjs-0.6.2.min.js"></script>
+        <script type="text/javascript">
+            var queue = new createjs.LoadQueue(true);
+            queue.loadFile("img/maps_banned.jpg");
+        </script>
         </div>
     </body>
 </html>

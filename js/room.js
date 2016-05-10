@@ -5,15 +5,15 @@
  */
 
 /* globals */
-var player, token; // externally assigned globals
+var player, auth; // externally assigned globals
 var step = 0, banRequested = false;
 var timeRemaining, timerHandle;
 
 function init() {
     synchronize();
+    cd_init();
     if (player !== 7)
         connect();
-    cd_init();
 }
 
 /* Communications */
@@ -57,7 +57,7 @@ function ban(map)
     $.ajax({
         url: 'system/ban.php',
         data: {
-            token: token,
+            token: auth,
             map: map,
             step: step
         },
@@ -79,7 +79,7 @@ function listen() {
     $.ajax({
         url: 'system/listen.php',
         data: {
-            token: token,
+            token: auth,
             step: step
         },
         type: 'GET',
@@ -91,7 +91,7 @@ function synchronize() {
     $.ajax({
         url: 'system/synchronize.php',
         data: {
-            token: token
+            token: auth
         },
         type: 'GET',
         dataType: 'json'
@@ -102,7 +102,7 @@ function connect() {
     $.ajax({
         url: 'system/connect.php',
         data: {
-            token: token
+            token: auth
         },
         type: 'GET',
         dataType: 'json'
