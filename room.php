@@ -1,6 +1,6 @@
 <?php
 // CONTROLLER
-include 'system/Room.class.php';
+include 'src/Room.class.php';
 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
 $Room = new Room($token);
 $player = $Room->player;
