@@ -65,7 +65,7 @@ function ban(map)
         url: 'src/ban.php',
         data: {
             token: auth,
-            map: map,
+            // map: map,
             step: step
         },
         type: 'GET',
