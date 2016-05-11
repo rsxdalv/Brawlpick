@@ -1,3 +1,16 @@
+<?php
+include 'system/Room.class.php';
+$token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
+$Room = new Room($token);
+$player = $Room->player;
+function getPlayerName( $player ) {
+    if ($player === 7) {
+        return "a spectator";
+    } else {
+        return "player " . ($player + 1);
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,13 +23,12 @@
     <body id="body" onload='init()'>
         <div id="overlay"></div>
         <div id="info">
-            <span id="player"> <?php
-                if ($player === 7) {
-                    echo "You are a spectator";
-                } else {
-                    echo "You are player " . ($player + 1);
-                }
-                ?> </span>
+            <span id="player"> 
+                You are 
+                <?php
+                    echo getPlayerName($player);
+                ?> 
+            </span>
             <span id="message">Waiting for players... </span>
             <span id="timer">60</span>
         </div>
@@ -33,12 +45,6 @@
             <br />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
         <script type="text/javascript">
-<?php
-include 'system/Room.class.php';
-$token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
-$Room = new Room($token);
-$player = $Room->player;
-?>
             /* globals */
             var auth = <?php echo json_encode($token); ?>;
             var player = <?php echo json_encode($player); ?>;
