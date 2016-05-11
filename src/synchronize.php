@@ -7,7 +7,7 @@
  */
 header('Cache-Control: no-store');
 
-include 'Database.class.php';
+include '../models/Database.class.php';
 include '../models/Room.class.php';
 include 'maps.php';
 
