@@ -15,6 +15,12 @@ $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $Room = new Room($token);
 $roomID = $Room->id;
 $player = $Room->player;
+
+if($player === Room::USER_SPECTATOR) {
+    echo json_encode ( array( 'success' => FALSE) );
+    exit;
+}
+
 $player2 = $Room->getOpponent($player);
 
 $database = new Database();
