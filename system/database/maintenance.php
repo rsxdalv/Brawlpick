@@ -44,7 +44,6 @@ and open the template in the editor.
                 <input type="radio" name="action" value="clear_rooms" />Clear rooms<br />
                 <input type="radio" name="action" value="create_rooms" />Create rooms<br />
                 <input type="radio" name="action" value="delete_rooms" />Delete rooms<br />
-                <input type="radio" name="action" value="tokenDebugger" />Open token debugger<br />
                 <input type="submit" value="Execute" />
             </fieldset>
         </form>
@@ -52,7 +51,7 @@ and open the template in the editor.
             <fieldset>
                 <legend>Action Response</legend>
         <span id="return"><?php 
-            include 'database/dbm.class.php';
+            include 'dbm.class.php';
             $dbm = new dbm();
             $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
             switch($action) {
@@ -83,10 +82,6 @@ and open the template in the editor.
                     $password = filter_input(INPUT_POST, 'mysql_password', FILTER_SANITIZE_STRING);
                     $database = filter_input(INPUT_POST, 'mysql_database', FILTER_SANITIZE_STRING);
                     $dbm->configure($host, $login, $password, $database);
-                    break;
-                case 'tokenDebugger':
-                    include 'token_debugger.php';
-                    echo '<a href="token_debugger.php">link</a>';
                     break;
             }
             ?></span>
