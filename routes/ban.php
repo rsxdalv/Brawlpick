@@ -7,9 +7,9 @@
  */
 header('Cache-Control: no-store');
 
-include '../models/Database.class.php';
-include '../models/Room.php';
-include '../models/maps.php';
+require_once '../models/Database.class.php';
+require_once '../models/Room.php';
+require_once '../models/maps.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 // $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
