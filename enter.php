@@ -2,7 +2,7 @@
 // CONTROLLER
 header('Cache-Control: no-store');
 
-include 'src/Room.class.php';
+include 'models/Room.class.php';
 $Room = new Room();
 
 $players['Player 1'] = urlencode($Room->getToken(Room::USER_PLAYER1));
