@@ -16,6 +16,13 @@ function init() {
         connect();
 }
 
+/* 
+    Returns parameters in the format of [ [key, value], [...] ]
+*/
+function getParameters() {
+    return document.location.search.slice(1).split('&').map( x => x.split('=') );
+}
+
 /* Communications */
 
 function updateUI(response) {
