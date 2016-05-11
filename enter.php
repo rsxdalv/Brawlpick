@@ -26,21 +26,17 @@ if($server_name === 'localhost') {
     <body>
         <div id="wrapper">
             <?php foreach( $players as $name => $token ) {?>
-                <a class="button" href="room.php?token=<?php echo $token?>"><?php echo $name ?></a>
+                <a class="button" href="room.php?token=<?php echo $token ?>"><?php echo $name ?></a>
             <?php }?>
             <a class="button" href="enter.php">New room</a>
             <br />
             <table>
+                <?php foreach( $players as $name => $token ) {?>
                 <tr>
-                    <td>Player 1:</td>
-                    <td><input type="text" value="<?php echo $URL.$token1; ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br /></td>
-                </tr> <tr>
-                    <td>Player 2:</td>
-                    <td><input type="text" value="<?php echo $URL.$token2; ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br /></td>
-                </tr> <tr>
-                    <td>Spectator:</td>
-                    <td><input type="text" value="<?php echo $URL.$token3; ?>" id="sample1" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br /></td>
-                </tr> 
+                    <td><?php echo $name ?>:</td>
+                    <td><input type="text" value="<?php echo $URL . $token; ?>" onClick="this.setSelectionRange(0, this.value.length)" readonly="" ><br /></td>
+                </tr>
+                <?php }?>
             </table>
         </div>
     </body>
