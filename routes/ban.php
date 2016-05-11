@@ -7,7 +7,7 @@
  */
 header('Cache-Control: no-store');
 
-require_once '../models/Database.class.php';
+require_once '../models/Database.php';
 require_once '../models/Room.php';
 require_once '../models/maps.php';
 
