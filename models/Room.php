@@ -71,5 +71,15 @@ class Room {
         }
         return true;
     }
-
+    
+    public function getOpponent($player) {
+        switch($player) {
+            case Room::USER_PLAYER1 :
+                return Room::USER_PLAYER2;
+            case Room::USER_PLAYER2 :
+                return Room::USER_PLAYER1;
+            default :
+                return -1;
+        }
+    }
 }

@@ -15,17 +15,7 @@ $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $Room = new Room($token);
 $roomID = $Room->id;
 $player = $Room->player;
-$player2 = 0;
-switch($player) {
-    case Room::USER_SPECTATOR :
-        exit;
-    case Room::USER_PLAYER1 :
-        $player2 = Room::USER_PLAYER2;
-        break;
-    case Room::USER_PLAYER2 :
-        $player2 = Room::USER_PLAYER1;
-        break;
-}
+$player2 = $Room->getOpponent($player);
 
 $database = new Database();
 if(!$database->checkIn($roomID, $player) ) {
