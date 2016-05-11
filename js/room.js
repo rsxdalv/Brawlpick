@@ -62,7 +62,7 @@ function ban(map)
     setLoadingAnimation(true);
 
     $.ajax({
-        url: 'system/ban.php',
+        url: 'src/ban.php',
         data: {
             token: auth,
             map: map,
@@ -84,7 +84,7 @@ function ban(map)
 
 function listen() {
     $.ajax({
-        url: 'system/listen.php',
+        url: 'src/listen.php',
         data: {
             token: auth,
             step: step
@@ -96,7 +96,7 @@ function listen() {
 
 function synchronize() {
     $.ajax({
-        url: 'system/synchronize.php',
+        url: 'src/synchronize.php',
         data: {
             token: auth
         },
@@ -107,7 +107,7 @@ function synchronize() {
 
 function connect() {
     $.ajax({
-        url: 'system/connect.php',
+        url: 'src/connect.php',
         data: {
             token: auth
         },
