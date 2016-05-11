@@ -2,9 +2,9 @@
 header('Cache-Control: no-store');
 include 'system/Room.class.php';
 $Room = new Room();
-$token1 = urlencode($Room->getToken(Room::USER_PLAYER1));
-$token2 = urlencode($Room->getToken(Room::USER_PLAYER2));
-$token3 = urlencode($Room->getToken(Room::USER_SPECTATOR));
+$players['Player 1'] = $token1 = urlencode($Room->getToken(Room::USER_PLAYER1));
+$players['Player 2'] = $token2 = urlencode($Room->getToken(Room::USER_PLAYER2));
+$players['Spectator'] = $token3 = urlencode($Room->getToken(Room::USER_SPECTATOR));
 $server_name = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_URL);
 $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_NUMBER_INT);
 if($server_name === 'localhost') {
@@ -23,9 +23,9 @@ if($server_name === 'localhost') {
     </head>
     <body>
         <div id="wrapper">
-            <a class="button" href="room.php?token=<?php echo $token1?>">Player 1</a>
-            <a class="button" href="room.php?token=<?php echo $token2?>">Player 2</a>
-            <a class="button" href="room.php?token=<?php echo $token3?>">Spectator</a>
+            <?php foreach( $players as $name => $token ) {?>
+                <a class="button" href="room.php?token=<?php echo $token?>"><?php echo $name ?></a>
+            <?php }?>
             <a class="button" href="enter.php">New room</a>
             <br />
             <table>
