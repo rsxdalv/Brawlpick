@@ -1,3 +1,3 @@
 <?php
-// Placeholder file
+// Placeholder file (ROUTER)
 include "enter.php";

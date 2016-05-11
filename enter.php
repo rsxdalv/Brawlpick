@@ -1,4 +1,5 @@
 <?php 
+// CONTROLLER
 header('Cache-Control: no-store');
 include 'system/Room.class.php';
 $Room = new Room();
@@ -12,6 +13,7 @@ if($server_name === 'localhost') {
 } else {
     $URL = 'http://'.$server_name.'/room.php?token=';
 }
+// VIEW
 ?>
 
 <!DOCTYPE html>

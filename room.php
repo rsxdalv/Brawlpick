@@ -1,4 +1,5 @@
 <?php
+// CONTROLLER
 include 'system/Room.class.php';
 $token = filter_input(INPUT_GET, "token", FILTER_SANITIZE_URL);
 $Room = new Room($token);
@@ -10,6 +11,7 @@ function getPlayerName( $player ) {
         return "player " . ($player + 1);
     }
 }
+// VIEW
 ?>
 <!DOCTYPE html>
 <html>
