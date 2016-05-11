@@ -12,7 +12,11 @@ $Room = new Room($token);
 $player = $Room->player;
 $roomID = $Room->id;
 $map = $mapList[$mapName];
-assert($map !== NULL);
+
+if($map === NULL) {
+    echo json_encode ( array( 'success' => FALSE) );
+    exit;
+}
 
 $database = new Database();
 echo $database->ban($roomID, $player, $map);
