@@ -1,11 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of room
  *
@@ -19,9 +12,11 @@ class Room {
     const USER_PLAYER2 = 1;
     const USER_BOT = 6;
 
+    // DISCLAIMER: DO NOT USE THE DEFAULT KEYS AS THEY ARE FREELY VISIBLE!
     private static $key = 'A172343B239823C9'; // 16 bytes hexadecimal
     private static $encryption = 'aes-128-cbc'; // Simple AES method
     private static $iv = '1A2B3C4E1A2B3C4E';  // 16 bytes hexadecimal
+    
     public $id;
     public $player;
     public $token;
