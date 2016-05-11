@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Draft Pick Mode</title>
-        <link rel="stylesheet" type="text/css" href="css/entrance.css" />
+        <link rel="stylesheet" type="text/css" href="public/css/entrance.css" />
     </head>
     <body>
         <div id="wrapper">
