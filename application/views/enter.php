@@ -3,14 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <title>Draft Pick Mode</title>
-        <link rel="stylesheet" type="text/css" href="public/css/entrance.css" />
+        <link rel="stylesheet" type="text/css" href="/app/public/css/entrance.css" />
+        <link rel="icon" href="/app/public/img/icon.ico" />
     </head>
     <body>
         <div id="wrapper">
             <?php foreach( $players as $name => $token ) {?>
-                <a class="button" href="room.php?token=<?php echo $token ?>"><?php echo $name ?></a>
+                <a class="button" href="/app/index.php/app/room/<?php echo $token ?>"><?php echo $name ?></a>
             <?php }?>
-            <a class="button" href="enter.php">New room</a>
+            <a class="button" href="/app/index.php/app/index">New room</a>
             <br />
             <table>
                 <?php foreach( $players as $name => $token ) {?>
