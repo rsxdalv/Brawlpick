@@ -8,7 +8,7 @@
 header('Cache-Control: no-store');
 
 include '../models/Database.class.php';
-include '../models/Room.class.php';
+include '../models/Room.php';
 
 $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 $step = filter_input(INPUT_GET, 'step', FILTER_SANITIZE_NUMBER_INT);
