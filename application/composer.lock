@@ -1,0 +1,49 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "9169ae53495608eb841dd95dbe86e40f",
+    "content-hash": "6c4e82b2e192ae47467227a792fcda9c",
+    "packages": [
+        {
+            "name": "open-halla/open-halla",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rsxdalv/open-halla-php.git",
+                "reference": "92f2209bb10cb8f4f7a23329261dcb4d64e6de24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rsxdalv/open-halla-php/zipball/92f2209bb10cb8f4f7a23329261dcb4d64e6de24",
+                "reference": "92f2209bb10cb8f4f7a23329261dcb4d64e6de24",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OpenHalla\\": "/src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "OpenHalla PHP utility library",
+            "time": "2016-05-06 21:05:55"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
