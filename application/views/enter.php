@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Draft Pick Mode</title>
         <link rel="stylesheet" type="text/css" href="/app/public/css/entrance.css" />
-        <link rel="icon" href="/app/public/img/icon.ico" />
+        <link rel="icon" href="/app/public/icon.ico" />
     </head>
     <body>
         <div id="wrapper">

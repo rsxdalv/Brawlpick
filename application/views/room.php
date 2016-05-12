@@ -3,7 +3,7 @@
     <head>
         <title>Draft Pick Mode</title>
         <link rel="stylesheet" type="text/css" href="/app/public/css/room.css" />
-        <link rel="icon" href="/app/public/img/icon.ico" />
+        <link rel="icon" href="/app/public/icon.ico" />
         <meta charset="UTF-8">
     </head>
     <body id="body" onload='init()'>
