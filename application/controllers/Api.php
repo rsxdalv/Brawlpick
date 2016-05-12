@@ -4,16 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Api extends CI_Controller {
     public function ban() {
         header('Cache-Control: no-store');
+        $this->load->model('Room');
+        
         // require_once '../models/Database.php';
-        // require_once '../models/Room.php';
         // require_once '../models/maps.php';
 
         // $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
         // $mapName = filter_input(INPUT_GET, 'map', FILTER_SANITIZE_STRING);
 
-        // $Room = new Room($token);
-        // $player = $Room->player;
-        // $roomID = $Room->id;
+        $this->Room->loadToken($token);
+        $player = $this->Room->player;
+        $roomID = $this->Room->id;
         // $map = $mapList[$mapName];
 
         // if($map === NULL) {
@@ -27,20 +28,22 @@ class Api extends CI_Controller {
     
     public function connect() {
         header('Cache-Control: no-store');
+        
+        $this->load->model('Room');
+        
 
         // require_once '../models/Database.php';
-        // require_once '../models/Room.php';
 
         // $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_URL);
 
-        // $Room = new Room($token);
-        // $roomID = $Room->id;
-        // $player = $Room->player;
+        $this->Room->loadToken($token);
+        $roomID = $this->Room->id;
+        $player = $this->Room->player;
 
-        // if($player === Room::USER_SPECTATOR) {
-        //     echo json_encode ( array( 'success' => FALSE) );
-        //     exit;
-        // }
+        if($player === $this->Room::USER_SPECTATOR) {
+            echo json_encode ( array( 'success' => FALSE) );
+            exit;
+        }
 
         // $player2 = $Room->getOpponent($player);
 
