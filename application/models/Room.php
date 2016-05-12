@@ -4,13 +4,14 @@
  *
  * @author rober
  */
-class Room {
+class Room extends CI_Model {
 
-    const USER_SPECTATOR = 7;
-    const USER_CONNECTED_CODE = 6; // USER_ prefix denotes data storage location
+
     const USER_PLAYER1 = 0;
     const USER_PLAYER2 = 1;
+    const USER_SPECTATOR = 7;
     const USER_BOT = 6;
+    const USER_CONNECTED_CODE = 5; // USER_ prefix denotes data storage location
 
     // DISCLAIMER: DO NOT USE THE DEFAULT KEYS AS THEY ARE FREELY VISIBLE!
     private static $key = 'A172343B239823C9'; // 16 bytes hexadecimal
@@ -21,15 +22,17 @@ class Room {
     public $player;
     public $token;
 
-    function __construct($token = NULL) {
-        if (isset($token)) {
-            $this->token = $token;
-            $room_and_player = openssl_decrypt($token, self::$encryption, self::$key, 0, self::$iv);
-            $this->id = $room_and_player & 0xFFFFFFF8;
-            $this->player = $room_and_player & 0x00000007;
-        } else {
-            $this->generateId();
-        }
+    function __construct()
+    {
+        parent::__construct();
+        $this->generateId();
+    }
+
+    function loadToken($token) {
+        $this->token = $token;
+        $room_and_player = openssl_decrypt($token, self::$encryption, self::$key, 0, self::$iv);
+        $this->id = $room_and_player & 0xFFFFFFF8;
+        $this->player = $room_and_player & 0x00000007;
     }
 
     public function getToken($player = NULL) {

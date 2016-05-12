@@ -5,17 +5,15 @@ class App extends CI_Controller {
     public function index() {
         header('Cache-Control: no-store');
 
-        // include 'models/Room.php';
-        // $Room = new Room();
+        $this->load->model('Room');
         
-        // $players['Player 1'] = urlencode($Room->getToken(Room::USER_PLAYER1));
-        // $players['Player 2'] = urlencode($Room->getToken(Room::USER_PLAYER2));
-        // $players['Spectator'] = urlencode($Room->getToken(Room::USER_SPECTATOR));
-
-        $players['test player'] = 'test token';
+        $players['Player 1'] = urlencode($this->Room->getToken(Room::USER_PLAYER1));
+        $players['Player 2'] = urlencode($this->Room->getToken(Room::USER_PLAYER2));
+        $players['Spectator'] = urlencode($this->Room->getToken(Room::USER_SPECTATOR));
 
         $server_name = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_URL);
         $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_SANITIZE_NUMBER_INT);
+        
         if($server_name === 'localhost') {
             $URL = 'http://'.$server_name.':'.$port.'/bt/room.php?token=';
         } else {
@@ -31,13 +29,12 @@ class App extends CI_Controller {
     }
     public function room($token) {
         
-        // require_once '../models/Room.php';
-
-        // $Room = new Room($token);
-        // $player = $Room->player;
+        $this->load->model('Room');
         
-        $player = 1;
-
+        $this->Room->loadToken($token);
+        
+        $player = $this->Room->player;
+        
         function getPlayerName( $player ) {
             if ($player === 7) {
                 return "a spectator";
